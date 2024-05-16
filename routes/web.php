@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\BerandaController;
+use App\Http\Controllers\Admin\AdminBerandaController;
+use App\Http\Controllers\Guest\GuestBerandaController;
+use App\Http\Controllers\Guest\GuestPendaftaranController;
+use App\Http\Controllers\Wali\WaliBerandaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/beranda', [BerandaController::class,'index'])->name('beranda');
-
+Route::get('/', [GuestBerandaController::class,'index'])->name('login');
+Route::get('/pendaftaran-santri-baru', [GuestPendaftaranController::class,'index']);
+Route::get('/admin/beranda', [AdminBerandaController::class,'index'])->name('admin-beranda');
+Route::get('/wali/beranda', [WaliBerandaController::class,'index'])->name('wali-beranda');

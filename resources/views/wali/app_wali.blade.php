@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Al-Huda Admin | @yield('title', $title)</title>
+    <title>Ponpes Al-Huda | @yield('title', $title)</title>
     <link rel="icon" type="image/png" href="{{ asset('images/pondok/logo.png') }}">
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
@@ -36,7 +36,7 @@
         <div class="iq-sidebar">
             <div class="iq-sidebar-logo d-flex justify-content-between">
                 <a href="index.html">
-                    <span>Al-Huda Admin</span>
+                    <span>Ponpes Al-Huda</span>
                 </a>
             </div>
             <div id="sidebar-scrollbar">
@@ -45,62 +45,42 @@
                         <li class="iq-menu-title">
                             <i class="ri-separator"></i><span>Main</span>
                         </li>
-                        <li class="@if (request()->routeIs('admin-beranda')) active @endif">
-                            <a href="{{ route('admin-beranda') }}" class="iq-waves-effect">
+                        <li class="@if (request()->routeIs('wali-beranda')) active @endif">
+                            <a href="{{ route('wali-beranda') }}" class="iq-waves-effect">
                                 <i class="ri-home-4-line"></i><span>Beranda</span>
                             </a>
                         </li>
-                        <li class="@if (request()->routeIs('daftar_ulang') || request()->routeIs('iuran_bulanan') || request()->routeIs('tamrin')) active @endif">
-                            <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
-                                aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
+                        <li class="@if (request()->routeIs('tagihan')) active @endif">
+                            <a href="" class="iq-waves-effect"><i
+                                    class="ri-chat-check-line"></i><span>Tagihan</span>
+                            </a>
+                        </li>
+                        <li class="@if (request()->routeIs('cek_nilai') || request()->routeIs('cek_hafalan') || request()->routeIs('cek_point')) active @endif">
+                            <a href="#progres" class="iq-waves-effect collapsed" data-toggle="collapse"
+                                aria-expanded="false"><i class="ri-pages-line"></i><span>Progres Santri</span>
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
-                            <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a href="">Daftar
-                                        Ulang</a></li>
-                                <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a href="">Iuran
-                                        Bulanan</a></li>
-                                <li class="@if (request()->routeIs('tamrin')) active @endif"><a href="">Tamrin</a>
+                            <ul id="progres" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="@if (request()->routeIs('cek_nilai')) active @endif"><a href="">Cek
+                                        Nilai</a></li>
+                                <li class="@if (request()->routeIs('cek_hafalan')) active @endif"><a href="">Cek
+                                        Hafalan</a></li>
+                                <li class="@if (request()->routeIs('cek_point')) active @endif"><a href="">Cek
+                                        Point</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="@if (request()->routeIs('pemasukkan')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
-                                    class="ri-chat-check-line"></i><span>Pemasukkan</span>
+                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_santri') || request()->routeIs('daftar_mapel')) active @endif">
+                            <a href="#informasi" class="iq-waves-effect collapsed" data-toggle="collapse"
+                                aria-expanded="false"><i class="ri-list-check"></i><span>Informasi</span>
+                                <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
-                        </li>
-                        <li class="@if (request()->routeIs('pengeluaran')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
-                                    class="ri-message-line"></i><span>Pengeluaran</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('laporan_keuangan')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan
-                                    Keuangan</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('santri')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('pendaftaran')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
-                                    class="ri-pages-line"></i><span>Pendaftaran</span>
-                            </a>
-                        </li>
-                        {{-- Tambahan Menu --}}
-                        <li class="iq-menu-title">
-                            <i class="ri-separator"></i><span>Master</span>
-                        </li>
-                        <li class="@if (request()->routeIs('master_admin')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master
-                                    Admin</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('master_guest')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master
-                                    Guest</span>
-                            </a>
+                            <ul id="informasi" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="@if (request()->routeIs('daftar_pengajar')) active @endif"><a href="">Daftar Pengajar</a></li>
+                                <li class="@if (request()->routeIs('daftar_santri')) active @endif"><a href="">Daftar Santri</a></li>
+                                <li class="@if (request()->routeIs('daftar_mapel')) active @endif"><a href="">Daftar Mata Pelajaran</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>
