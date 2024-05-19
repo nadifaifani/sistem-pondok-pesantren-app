@@ -12,11 +12,11 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Beranda</h5>
+                <h5 class="mb-0">Laporan Keuangan</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Beranda</li>
+                        <li class="breadcrumb-item active" aria-current="page">Laporan Keuangan</li>
                     </ul>
                 </nav>
             </div>
@@ -89,10 +89,10 @@
 @section('content')
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
+        <!-- Card -->
         <div class="container-fluid">
-            <!-- Card -->
             <div class="row">
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-body pb-0">
                             <div class="rounded-circle iq-card-icon iq-bg-primary"><i class="ri-exchange-dollar-fill"></i>
@@ -100,12 +100,12 @@
                             <span class="float-right line-height-6">Pemasukan Pondok</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                       2000</span></h2>
+                                        {{ number_format($totalPemasukan, 0, ',', '.') }}</span></h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-body pb-0">
                             <div class="rounded-circle iq-card-icon iq-bg-warning"><i class="ri-shopping-cart-line"></i>
@@ -113,12 +113,12 @@
                             <span class="float-right line-height-6">Total Pengeluaran</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
+                                        {{ number_format($totalPengeluaran, 0, ',', '.') }}</span></h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-body pb-0">
                             <div class="rounded-circle iq-card-icon iq-bg-success"><i
@@ -126,32 +126,48 @@
                             <span class="float-right line-height-6">Total Keuangan</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
-                        <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-danger"><i class="ri-group-line"></i>
-                            </div>
-                            <span class="float-right line-height-6">Total Santri</span>
-                            <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="me-2">2000</span><span> santri</span>
-                                </h2>
+                                        {{ number_format($totalKeuangan, 0, ',', '.') }}</span></h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Alert -->
+        <div class="container-fluid">
+            @if (session('success'))
+                <div id="success-alert" class="alert text-white bg-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-checkbox-circle-line"></i>
+                    </div>
+                    <div class="iq-alert-text"><b>Berhasil !</b> {{ session('success') }}</div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $err)
+                    <div id="error-alert" class="alert text-white bg-danger" role="alert">
+                        <div class="iq-alert-icon">
+                            <i class="ri-information-line"></i>
+                        </div>
+                        <div class="iq-alert-text"><b>Gagal ! </b> {{ $err }}</div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+        {{-- Grafik Keuangan --}}
+        <div class="container-fluid">
             <div class="row">
-                {{-- Chart Keuangan --}}
-                <div class="col-lg-8">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                <div class="col">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height fadeInUp p-2">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h5 class="card-title">Pemasukan dan Pengeluaran Pondok</h5>
+                                <h4 class="card-title">Grafik Keuangan</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -159,16 +175,76 @@
                         </div>
                     </div>
                 </div>
-                {{-- Chart Santri --}}
-                <div class="col-lg-4">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+            </div>
+        </div>
+        {{-- Tabel Pemasukan --}}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h5 class="card-title">Grafik Santri</h5>
+                                <h4 class="card-title">Pemasukan Pondok</h4>
+                            </div>
+                            <div class="col text-right">
+                                <button id="exportPemasukanExcel" class="btn text-white" style="background-color: #209e62;"><i
+                                        class="ri-file-excel-2-fill"></i> Export</button>
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div id="chart_santri"></div>
+                            <div class="table-responsive pb-3 pt-2 px-3">
+                                <table id="tablePemasukan" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal Pemasukan</th>
+                                            <th>Nama Santri</th>
+                                            <th>Jumlah Pemasukan</th>
+                                            <th>Diterima Oleh</th>
+                                            <th>Jenis Pemasukan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- Tabel Pengeluran --}}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Pengeluaran Pondok</h4>
+                            </div>
+                            <div class="col text-right">
+                                <button id="exportPengeluaranExcel" class="btn text-white" style="background-color: #209e62"><i
+                                        class="ri-file-excel-2-fill"></i> Export</button>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div class="table-responsive pb-3 pt-2 px-3">
+                                <table id="tablePengeluaran" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal Pengeluaran</th>
+                                            <th>Jumlah Pengeluaran</th>
+                                            <th>Deskripsi Pengeluaran</th>
+                                            <th>Nama Pengeluar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

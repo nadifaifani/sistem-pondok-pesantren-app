@@ -17,10 +17,11 @@ class WaliSantri extends Model
         'password_wali_santri', 
         'no_hp', 
         'alamat_wali_santri', 
+        'id_santri',
     ];
 
     public function santri()
     {
-        return $this->belongsTo(Santri::class, 'id_santri', 'id_santri');
+        return $this->belongsTo(Santri::class, 'id_santri');
     }
 }

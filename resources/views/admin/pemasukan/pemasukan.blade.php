@@ -12,11 +12,11 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Beranda</h5>
+                <h5 class="mb-0">Pemasukan</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Beranda</li>
+                        <li class="breadcrumb-item active" aria-current="page">Pemasukan</li>
                     </ul>
                 </nav>
             </div>
@@ -89,90 +89,106 @@
 @section('content')
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
+        <!-- Alert -->
         <div class="container-fluid">
-            <!-- Card -->
+            @if (session('success'))
+                <div id="success-alert" class="alert text-white bg-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-checkbox-circle-line"></i>
+                    </div>
+                    <div class="iq-alert-text"><b>Berhasil !</b> {{ session('success') }}</div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $err)
+                    <div id="error-alert" class="alert text-white bg-danger" role="alert">
+                        <div class="iq-alert-icon">
+                            <i class="ri-information-line"></i>
+                        </div>
+                        <div class="iq-alert-text"><b>Gagal ! </b> {{ $err }}</div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+        {{-- Tabel --}}
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
-                        <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-primary"><i class="ri-exchange-dollar-fill"></i>
-                            </div>
-                            <span class="float-right line-height-6">Pemasukan Pondok</span>
-                            <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                       2000</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
-                        <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-warning"><i class="ri-shopping-cart-line"></i>
-                            </div>
-                            <span class="float-right line-height-6">Total Pengeluaran</span>
-                            <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
-                        <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-success"><i
-                                    class="ri-bar-chart-grouped-line"></i></div>
-                            <span class="float-right line-height-6">Total Keuangan</span>
-                            <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
-                        <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-danger"><i class="ri-group-line"></i>
-                            </div>
-                            <span class="float-right line-height-6">Total Santri</span>
-                            <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="me-2">2000</span><span> santri</span>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                {{-- Chart Keuangan --}}
-                <div class="col-lg-8">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                <div class="col-sm-12">
+                    <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h5 class="card-title">Pemasukan dan Pengeluaran Pondok</h5>
+                                <h4 class="card-title">Pemasukan Pondok</h4>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                    Tambah Pemasukan
+                                </button>
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div id="chart_keuangan"></div>
-                        </div>
-                    </div>
-                </div>
-                {{-- Chart Santri --}}
-                <div class="col-lg-4">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="iq-header-title">
-                                <h5 class="card-title">Grafik Santri</h5>
+                            <div class="table-responsive pb-3 pt-2 px-3">
+                                <table id="tablePemasukan" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal Pemasukan</th>
+                                            <th>Jumlah Pemasukan</th>
+                                            <th>Deskripsi Pemasukan</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                        <div class="iq-card-body">
-                            <div id="chart_santri"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pemasukan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('/pemasukan/create') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="jumlah_pemasukan">Jumlah Pemasukan <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="jumlah_pemasukan" name="jumlah_pemasukan"
+                                value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi_pemasukan">Deskripsi Pemasukan</label>
+                            <textarea class="form-control" id="deskripsi_pemasukan" name="deskripsi_pemasukan" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete -->
+    {{-- l --}}
 @endsection

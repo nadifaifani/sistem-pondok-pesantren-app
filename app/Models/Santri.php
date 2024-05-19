@@ -22,10 +22,20 @@ class Santri extends Model
         'kk_santri',
     ];
 
-    public function waliSantri()
+
+    public function NilaiSantri()
     {
-        return $this->hasOne(WaliSantri::class, 'id_santri', 'id_santri');
+        return $this->hasMany(NilaiSantri::class, 'id_santri', 'id_santri');
     }
 
+    public function PointSantri()
+    {
+        return $this->hasMany(PointSantri::class, 'id_santri', 'id_santri');
+    }
+
+    public function Pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_santri', 'id_santri');
+    }
 
 }

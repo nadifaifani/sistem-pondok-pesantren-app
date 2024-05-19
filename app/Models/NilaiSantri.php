@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class NilaiSantri extends Model
 {
     use HasFactory;
+
+    protected $table = 'pengeluaran';
+    protected $primaryKey = 'id_nilai';
+    protected $fillable = [
+        'semester',
+        'id_mata_pelajaran',
+    ];
+
+
+    public function MataPelajaran()
+    {
+        return $this->hasOne(MataPelajaran::class, 'id_mata_pelajaran');
+    }
 }

@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pengeluaran extends Model
+class Pemasukan extends Model
 {
     use HasFactory;
-    
-    protected $table = 'pengeluaran';
-    protected $primaryKey = 'id_pengeluaran';
+
+    protected $table = 'pemasukan';
+    protected $primaryKey = 'id_pemasukan';
     protected $fillable = [
-        'jumlah_pengeluaran',
-        'tanggal_pengeluaran',
-        'deskripsi_pengeluaran',
-        'nama_pengeluar',
+        'jumlah_pemasukan',
+        'tanggal_pemasukan',
+        'deskripsi_pemasukan',
         'id_admin',
     ];
 
@@ -24,5 +23,4 @@ class Pengeluaran extends Model
     {
         return $this->hasOne(User::class, 'id_admin');
     }
-   
 }

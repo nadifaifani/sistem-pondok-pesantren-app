@@ -17,16 +17,17 @@ class User extends Authenticatable
     protected $fillable = [
         'nama_admin',
         'email_admin',
-        'password_admin',   'no_hp_admin',
+        'password_admin',   
+        'no_hp_admin',
     ];
 
     public function pembayaran()
     {
-        return $this->hasMany(Pembayaran::class, 'id_admin');
+        return $this->hasMany(Pembayaran::class, 'id_admin', 'id_admin');
     }
 
     public function pengeluaran()
     {
-        return $this->hasMany(Pengeluaran::class, 'id_admin');
+        return $this->hasMany(Pengeluaran::class, 'id_admin', 'id_admin');
     }
 }

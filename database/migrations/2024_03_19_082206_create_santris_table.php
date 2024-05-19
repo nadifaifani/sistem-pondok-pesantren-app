@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('santris', function (Blueprint $table) {
             $table->id('id_santri');
-            $table->unsignedBigInteger('id_wali_santri')->nullable();
             $table->string('nama_santri');
             $table->string('tempat_tanggal_lahir_santri');
             $table->string('jenis_kelamin_santri'); 
@@ -27,7 +26,6 @@ return new class extends Migration
             $table->string('kk_santri');
             $table->timestamps();
 
-            $table->foreign('id_wali_santri')->references('id_wali_santri')->on('wali_santris');
         });
     }
 

@@ -56,27 +56,23 @@
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
                             <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a href="">Daftar
-                                        Ulang</a></li>
-                                <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a href="">Iuran
-                                        Bulanan</a></li>
-                                <li class="@if (request()->routeIs('tamrin')) active @endif"><a href="">Tamrin</a>
-                                </li>
+                                <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                                <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
+                                <li class="@if (request()->routeIs('tamrin')) active @endif"><a href="{{ route('tamrin') }}">Tamrin</a></li>
                             </ul>
                         </li>
                         <li class="@if (request()->routeIs('pemasukkan')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
+                            <a href="{{ route('pemasukan') }}" class="iq-waves-effect"><i
                                     class="ri-chat-check-line"></i><span>Pemasukkan</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('pengeluaran')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
+                            <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
                                     class="ri-message-line"></i><span>Pengeluaran</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('laporan_keuangan')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan
-                                    Keuangan</span>
+                            <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan Keuangan</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('santri')) active @endif">
