@@ -43,7 +43,7 @@
                     <div class="col-lg-6">
                         <button class="btn btn-link d-inline-flex align-items-center" type="button"
                             onclick="location.href='#formlogin'" style="text-decoration: none">
-                            Login Petugas
+                            Login Website
                             <span class="ms-3"><i class="bi bi-chevron-right"></i></span>
                         </button>
                     </div>
