@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('tagihan')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
+                            <a href="{{ route('tagihan') }}" class="iq-waves-effect"><i
                                     class="ri-chat-check-line"></i><span>Tagihan</span>
                             </a>
                         </li>
@@ -61,24 +61,24 @@
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
                             <ul id="progres" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('cek_nilai')) active @endif"><a href="">Cek
+                                <li class="@if (request()->routeIs('cek_nilai')) active @endif"><a href="{{ route('cek_nilai') }}">Cek
                                         Nilai</a></li>
-                                <li class="@if (request()->routeIs('cek_hafalan')) active @endif"><a href="">Cek
+                                <li class="@if (request()->routeIs('cek_hafalan')) active @endif"><a href="{{ route('cek_hafalan') }}">Cek
                                         Hafalan</a></li>
-                                <li class="@if (request()->routeIs('cek_point')) active @endif"><a href="">Cek
+                                <li class="@if (request()->routeIs('cek_point')) active @endif"><a href="{{ route('cek_point') }}">Cek
                                         Point</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_santri') || request()->routeIs('daftar_mapel')) active @endif">
-                            <a href="#informasi" class="iq-waves-effect collapsed" data-toggle="collapse"
+                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_santri') || request()->routeIs('daftar_mata_pelajaranendif')) active @endif" >
+                            <a href="#informasi" class="iq-waves-effect collapsed" data-toggle="collapse" 
                                 aria-expanded="false"><i class="ri-list-check"></i><span>Informasi</span>
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
                             <ul id="informasi" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('daftar_pengajar')) active @endif"><a href="">Daftar Pengajar</a></li>
-                                <li class="@if (request()->routeIs('daftar_santri')) active @endif"><a href="">Daftar Santri</a></li>
-                                <li class="@if (request()->routeIs('daftar_mapel')) active @endif"><a href="">Daftar Mata Pelajaran</a>
+                                <li class="@if (request()->routeIs('daftar_pengajar')) active @endif"><a href="{{ route('daftar_pengajar') }}">Daftar Pengajar</a></li>
+                                <li class="@if (request()->routeIs('daftar_santri')) active @endif"><a href="{{ route('daftar_santri') }}">Daftar Santri</a></li>
+                                <li class="@if (request()->routeIs('daftar_mata_pelajaran')) active @endif"><a href="{{ route('daftar_mata_pelajaran') }}">Daftar Mata Pelajaran</a>
                                 </li>
                             </ul>
                         </li>

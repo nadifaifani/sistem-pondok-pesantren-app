@@ -100,7 +100,7 @@
                             <span class="float-right line-height-6">Pemasukan Pondok</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                        {{ number_format($totalPemasukan, 0, ',', '.') }}</span></h2>
+                                        3000</span></h2>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                             <span class="float-right line-height-6">Total Pengeluaran</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                        {{ number_format($totalPengeluaran, 0, ',', '.') }}</span></h2>
+                                        3000</span></h2>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                             <span class="float-right line-height-6">Total Keuangan</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                        {{ number_format($totalKeuangan, 0, ',', '.') }}</span></h2>
+                                        3000</span></h2>
                             </div>
                         </div>
                     </div>

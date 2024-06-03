@@ -76,11 +76,11 @@
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('santri')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
+                            <a href="{{ route('santri') }}" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('pendaftaran')) active @endif">
-                            <a href="" class="iq-waves-effect"><i
+                            <a href="{{ route('pendaftaran') }}" class="iq-waves-effect"><i
                                     class="ri-pages-line"></i><span>Pendaftaran</span>
                             </a>
                         </li>
@@ -89,7 +89,7 @@
                             <i class="ri-separator"></i><span>Master</span>
                         </li>
                         <li class="@if (request()->routeIs('master_admin')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master
+                            <a href="{{ ('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master
                                     Admin</span>
                             </a>
                         </li>

@@ -12,11 +12,12 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Beranda</h5>
+                <h5 class="mb-0">Daftar Mata Pelajaran</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Beranda</li>
+                        <li class="breadcrumb-item active" aria-current="page">Informasi</li>
+                        <li class="breadcrumb-item active" aria-current="page">Daftar Mata Pelajaran</li>
                     </ul>
                 </nav>
             </div>
@@ -88,44 +89,82 @@
 @endsection
 @section('content')
     <!-- Page Content  -->
-    <div id="content-page" class="content-page">
-        <!-- Alert -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- Card -->
-                    <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <img src="{{ asset('images/pondok/qurban.jpeg') }}" class="card-img" alt="Gambar Qurban">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Infaq Qurban</h4>
-                                        <p class="card-text">Santri dimohon untuk melakukan pembayaran infaq Qurban Idul Adha 2024</p>
-                                        <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
-                                        <p class="card-text">TU Putri, Ustadz. Abdul – 081206583614</p>
-                                        <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    </div>
-                                </div>
-                             </div>
-                       </div>
-                    </div>
-                    
-                    <!-- PDF Viewer -->
-                    <div class="iq-card mt-4">
-                        <div class="iq-card-body">
-                            <h4 class="card-title">Jadwal Penjengukan Santri</h4>
-                            <div class="pdf-viewer">
-                                <iframe src="{{ asset('assets/local/jadwal.pdf') }}" width="100%" height="600px" style="border: none;">
-                                </iframe>
-                            </div>
+   <div id="content-page" class="content-page">
+    <!-- Alert -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class="card-title">Daftar Mata Pelajaran</h4>
                         </div>
-                    </div>
-                 </div>
+                     </div>
+                     <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                               <thead>
+                                  <tr>
+                                     <th scope="col">#</th>
+                                     <th scope="col">Mata Pelajaran</th>
+                                     <th class="text-center" scope="col">Keterangan</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr>
+                                     <th scope="row">1</th>
+                                     <td>Al-Quran dan Tajwid</td>
+                                     <td>Pembelajaran tentang bacaan Al-Qur’an, tajwid (pengucapan yang benar), 
+                                        serta pemahaman dan penafsiran terhadap ayat-ayat Al-Qur’an.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">2</th>
+                                     <td>Bahasa Arab</td>
+                                     <td>Pembelajaran tata bahasa, kosakata, serta kemampuan membaca, menulis, dan berbicara dalam bahasa Arab.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">3</th>
+                                     <td>Fiqh</td>
+                                     <td>Pembelajaran tentang prinsip-prinsip hukum Islam yang meliputi ibadah, muamalah (urusan sosial-ekonomi), dan hukum keluarga, 
+                                        serta bagaimana menerapkannya dalam kehidupan sehari-hari.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">4</th>
+                                     <td>Hadist</td>
+                                     <td>Pembelajaran tentang hadis-hadis yang berhubungan dengan etika, hukum Islam, dan nasihat kehidupan sehari-hari.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">5</th>
+                                     <td>Aqidah</td>
+                                     <td>Pembelajaran tentang prinsip-prinsip dasar Islam, seperti keimanan kepada Allah, malaikat, kitab-kitab suci, rasul-rasul, 
+                                        hari kiamat, dan takdir.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">6</th>
+                                     <td>Sirah Nabawiyyah</td>
+                                     <td>Pembelajaran tentang sejarah hidup Nabi, peristiwa-peristiwa penting dalam sejarah Islam, 
+                                        serta pelajaran moral dan nilai-nilai yang dapat dipetik dari kehidupan Nabi.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">7</th>
+                                     <td>Tazkiyatun Nafs</td>
+                                     <td>Pelajaran ini bertujuan untuk memperbaiki akhlak dan membentuk kepribadian yang baik. 
+                                        Peserta didik mempelajari tentang akhlak terpuji, seperti sabar, ikhlas, tawakal, dan sebagainya.</td>
+                                  </tr>
+                                  <tr>
+                                     <th scope="row">8</th>
+                                     <td>Tarikh</td>
+                                     <td>Pelajaran ini mencakup sejarah perkembangan Islam dari masa awal hingga masa sekarang. 
+                                        Para santri mempelajari tentang peristiwa-peristiwa penting, tokoh-tokoh penting dalam sejarah Islam, 
+                                        dan pengaruhnya terhadap peradaban Islam.</td>
+                                  </tr>
+                               </tbody>
+                            </table>
+                        </div>
+                     </div>
+                </div>
             </div>
         </div>
     </div>
+</div> 
 @endsection

@@ -1,4 +1,4 @@
-@extends('wali/app_wali')
+@extends('admin/app_admin')
 @section('navbar')
     <!-- TOP Nav Bar -->
     <div class="iq-top-navbar">
@@ -6,17 +6,17 @@
             <div class="iq-sidebar-logo">
                 <div class="top-logo">
                     <a href="index.html" class="logo">
-                        <span>Ponpes Al-Huda</span>
+                        <span>Al-Huda Admin</span>
                     </a>
                 </div>
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Beranda</h5>
+                <h5 class="mb-0">Pendaftaran</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Beranda</li>
+                        <li class="breadcrumb-item active" aria-current="page">Pendaftaran</li>
                     </ul>
                 </nav>
             </div>
@@ -83,49 +83,6 @@
                     </li>
                 </ul>
             </nav>
-        </div>
-    </div>
-@endsection
-@section('content')
-    <!-- Page Content  -->
-    <div id="content-page" class="content-page">
-        <!-- Alert -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- Card -->
-                    <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <img src="{{ asset('images/pondok/qurban.jpeg') }}" class="card-img" alt="Gambar Qurban">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Infaq Qurban</h4>
-                                        <p class="card-text">Santri dimohon untuk melakukan pembayaran infaq Qurban Idul Adha 2024</p>
-                                        <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
-                                        <p class="card-text">TU Putri, Ustadz. Abdul – 081206583614</p>
-                                        <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    </div>
-                                </div>
-                             </div>
-                       </div>
-                    </div>
-                    
-                    <!-- PDF Viewer -->
-                    <div class="iq-card mt-4">
-                        <div class="iq-card-body">
-                            <h4 class="card-title">Jadwal Penjengukan Santri</h4>
-                            <div class="pdf-viewer">
-                                <iframe src="{{ asset('assets/local/jadwal.pdf') }}" width="100%" height="600px" style="border: none;">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-            </div>
         </div>
     </div>
 @endsection
