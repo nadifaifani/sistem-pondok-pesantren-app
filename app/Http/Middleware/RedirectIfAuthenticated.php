@@ -17,16 +17,26 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle($request, Closure $next, ...$guards)
     {
-        $guards = empty($guards) ? [null] : $guards;
-
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return redirect($this->redirectTo($guard));
             }
         }
 
         return $next($request);
+    }
+
+    protected function redirectTo($guard)
+    {
+        switch ($guard) {
+            case 'web':
+                return route('admin-beranda');
+            case 'wali_santri':
+                return route('wali-beranda');
+            default:
+                return '/';
+        }
     }
 }

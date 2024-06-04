@@ -37,7 +37,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -74,8 +74,11 @@
                                         </div>
                                     </a>
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="iq-bg-danger iq-sign-btn btn-block" href=""
-                                            role="button">Keluar<i class="ri-login-box-line ml-2"></i></a>
+                                        <form action="{{ url('/logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="iq-bg-danger iq-sign-btn btn-block">Keluar<i
+                                                    class="ri-login-box-line ml-2"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -98,33 +101,37 @@
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    <img src="{{ asset('images/pondok/qurban.jpeg') }}" class="card-img" alt="Gambar Qurban">
+                                    <img src="{{ asset('images/pondok/qurban.jpeg') }}" class="card-img"
+                                        alt="Gambar Qurban">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
                                         <h4 class="card-title">Infaq Qurban</h4>
-                                        <p class="card-text">Santri dimohon untuk melakukan pembayaran infaq Qurban Idul Adha 2024</p>
-                                        <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
+                                        <p class="card-text">Santri dimohon untuk melakukan pembayaran infaq Qurban Idul
+                                            Adha 2024</p>
+                                        <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan
+                                            tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
                                         <p class="card-text">TU Putri, Ustadz. Abdul – 081206583614</p>
-                                        <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p <p class="card-text">
+                                        <small class="text-muted">Last updated 3 mins ago</small></p>
                                     </div>
                                 </div>
-                             </div>
-                       </div>
+                            </div>
+                        </div>
                     </div>
-                    
+
                     <!-- PDF Viewer -->
                     <div class="iq-card mt-4">
                         <div class="iq-card-body">
                             <h4 class="card-title">Jadwal Penjengukan Santri</h4>
                             <div class="pdf-viewer">
-                                <iframe src="{{ asset('assets/local/jadwal.pdf') }}" width="100%" height="600px" style="border: none;">
+                                <iframe src="{{ asset('assets/local/jadwal.pdf') }}" width="100%" height="600px"
+                                    style="border: none;">
                                 </iframe>
                             </div>
                         </div>
                     </div>
-                 </div>
+                </div>
             </div>
         </div>
     </div>

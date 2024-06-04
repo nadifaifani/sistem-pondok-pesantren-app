@@ -11,14 +11,20 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    protected $table = 'admin';
+    protected $table = 'admins';
     protected $primaryKey = 'id_admin';
 
     protected $fillable = [
         'nama_admin',
-        'email_admin',
-        'password_admin',   
+        'email',
+        'password', 
+        'remember_token',
+        'role',  
         'no_hp_admin',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     public function pembayaran()

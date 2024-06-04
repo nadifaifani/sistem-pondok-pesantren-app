@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'wali_santri' => [
+            'driver' => 'session',
+            'provider' => 'wali_santris',
+        ]
     ],
 
     /*
@@ -63,6 +68,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'wali_santris' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\WaliSantri::class,
         ],
 
         // 'users' => [

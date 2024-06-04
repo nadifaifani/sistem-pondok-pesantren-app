@@ -303,8 +303,8 @@
                     <img class="" src="{{ asset('images/pondok/asset2.png') }}" alt="" width="70%">
                 </div>
                 <div class="col">
-                    <h1 class="mb-0 fw-bold p-navy">Login Petugas</h1>
-                    <p>Masukkan email dan password untuk mengakses halaman admin.</p>
+                    <h1 class="mb-0 fw-bold p-navy">Login Website</h1>
+                    <p>Masukkan email dan password untuk mengakses website.</p>
                     {{-- Notifikasi --}}
                     @if ($errors->any())
                         @foreach ($errors->all() as $err)

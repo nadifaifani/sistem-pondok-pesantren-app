@@ -9,7 +9,7 @@ class NilaiSantri extends Model
 {
     use HasFactory;
 
-    protected $table = 'pengeluaran';
+    protected $table = 'nilai_santris';
     protected $primaryKey = 'id_nilai';
     protected $fillable = [
         'semester',

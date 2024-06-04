@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PointSantri extends Model
 {
     use HasFactory;
-    protected $table = 'point_santri';
+    protected $table = 'point_santris';
     protected $primaryKey = 'id_point_santri';
     protected $fillable = [
         'jenis_point_santri',

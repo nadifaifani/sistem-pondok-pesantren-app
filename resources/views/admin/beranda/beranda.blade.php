@@ -37,7 +37,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -74,8 +74,11 @@
                                         </div>
                                     </a>
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="iq-bg-danger iq-sign-btn btn-block" href=""
-                                            role="button">Keluar<i class="ri-login-box-line ml-2"></i></a>
+                                        <form action="{{ url('/logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="iq-bg-danger iq-sign-btn btn-block">Keluar<i
+                                                    class="ri-login-box-line ml-2"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +103,7 @@
                             <span class="float-right line-height-6">Pemasukan Pondok</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.
-                                       2000</span></h2>
+                                        2000</span></h2>
                             </div>
                         </div>
                     </div>
@@ -121,8 +124,8 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-success"><i
-                                    class="ri-bar-chart-grouped-line"></i></div>
+                            <div class="rounded-circle iq-card-icon iq-bg-success"><i class="ri-bar-chart-grouped-line"></i>
+                            </div>
                             <span class="float-right line-height-6">Total Keuangan</span>
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="">Rp.

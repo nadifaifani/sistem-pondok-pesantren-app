@@ -9,7 +9,7 @@ class MataPelajaran extends Model
 {
     use HasFactory;
 
-    protected $table = 'mata_pelajaran';
+    protected $table = 'mata_pelajarans';
     protected $primaryKey = 'id_mata_pelajaran';
     protected $fillable = [
         'fiqih',

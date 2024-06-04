@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id('id_admin');
             $table->string('nama_admin');
-            $table->string('email_admin')->unique();
-            $table->string('password_admin');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('remember_token')->nullable();
+            $table->string('role')->default('admin');
             $table->string('no_hp_admin');
             $table->timestamps();
         });

@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id('id_wali_santri');
             $table->unsignedBigInteger('id_santri')->nullable();
             $table->string('nama_wali_santri');
-            $table->string('email_wali_santri')->unique();
-            $table->string('password_wali_santri');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('remember_token')->nullable();
+            $table->string('role')->default('wali');
             $table->string('no_hp');
             $table->string('alamat_wali_santri');
             $table->timestamps();
