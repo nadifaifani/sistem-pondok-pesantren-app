@@ -21,9 +21,14 @@ return new class extends Migration
             $table->string('alamat_santri');  
             $table->string('no_hp_santri');
             $table->string('email_santri')->unique();
-            $table->string('status_santri');
+            $table->string('nama_wali_santri');
+            $table->string('no_hp_wali_santri');
             $table->string('ktp_santri');
             $table->string('kk_santri');
+            $table->string('akta_santri');
+            $table->string('pas_foto_santri');
+            $table->string('status_santri');
+            $table->string('tahun_masuk');
             $table->timestamps();
 
         });

@@ -37,7 +37,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -74,8 +74,11 @@
                                         </div>
                                     </a>
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="iq-bg-danger iq-sign-btn btn-block" href=""
-                                            role="button">Keluar<i class="ri-login-box-line ml-2"></i></a>
+                                        <form action="{{ url('/logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="iq-bg-danger iq-sign-btn btn-block">Keluar<i
+                                                    class="ri-login-box-line ml-2"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -284,4 +287,89 @@
             </div>
         </div>
     @endforeach --}}
+@endsection
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#tableSantri').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('santri') }}",
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'nama_santri',
+                        name: 'nama_santri'
+                    },
+                    // Kolom tempat tanggal lahir santri
+                    {
+                        data: 'tempat_tanggal_lahir_santri',
+                        name: 'tempat_tanggal_lahir_santri'
+                    },
+                    // Kolom alamat santri
+                    {
+                        data: 'alamat_santri',
+                        name: 'alamat_santri'
+                    },
+                    // Kolom nomor HP santri
+                    {
+                        data: 'no_hp_santri',
+                        name: 'no_hp_santri'
+                    },
+                    // Kolom status santri
+                    {
+                        data: 'status_santri',
+                        name: 'status_santri',
+                        render: function(data, type, full, meta) {
+                            if (data === 'pulang') {
+                                return '<span class="badge badge-pill badge-primary">Pulang</span>';
+                            } else {
+                                return '<span class="badge badge-pill badge-success">Menetap</span>';
+                            }
+                        }
+                    },
+                    // Kolom aksi (tombol Info, Edit, Delete)
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<td class="text-center">' +
+                                '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Info" href="#" data-target="#infoModal' +
+                                full.id_santri + '" data-toggle="modal" data-id="' + full
+                                .id_santri + '">' +
+                                '<i class="ri-information-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Edit" href="/santri/' + full
+                                .id_santri + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" data-target="#deleteModal' +
+                                full.id_santri + '" data-toggle="modal" data-id="' + full
+                                .id_santri + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</td>';
+                        }
+                    }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+
+        });
+    </script>
 @endsection

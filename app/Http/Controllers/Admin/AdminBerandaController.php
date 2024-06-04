@@ -11,6 +11,8 @@ class AdminBerandaController extends Controller
     {
         $data['title'] = 'Beranda';
 
+        
+
         return view('admin.beranda.beranda', [
 
         ], $data);

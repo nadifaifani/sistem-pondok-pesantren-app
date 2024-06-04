@@ -22,6 +22,7 @@
     <link
         href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.11.0/r-2.5.0/rr-1.4.1/sc-2.3.0/sb-1.6.0/datatables.min.css"
         rel="stylesheet">
+
     <style>
         a {
             text-decoration: none;
@@ -56,9 +57,12 @@
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
                             <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
-                                <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
-                                <li class="@if (request()->routeIs('tamrin')) active @endif"><a href="{{ route('tamrin') }}">Tamrin</a></li>
+                                <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a
+                                        href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                                <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a
+                                        href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
+                                <li class="@if (request()->routeIs('tamrin')) active @endif"><a
+                                        href="{{ route('tamrin') }}">Tamrin</a></li>
                             </ul>
                         </li>
                         <li class="@if (request()->routeIs('pemasukkan')) active @endif">
@@ -72,11 +76,13 @@
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('laporan_keuangan')) active @endif">
-                            <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan Keuangan</span>
+                            <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i
+                                    class="ri-calendar-2-line"></i><span>Laporan Keuangan</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('santri')) active @endif">
-                            <a href="{{ route('santri') }}" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
+                            <a href="{{ route('santri') }}" class="iq-waves-effect"><i
+                                    class="ri-user-line"></i><span>Santri</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('pendaftaran')) active @endif">
@@ -89,7 +95,8 @@
                             <i class="ri-separator"></i><span>Master</span>
                         </li>
                         <li class="@if (request()->routeIs('master_admin')) active @endif">
-                            <a href="{{ ('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master
+                            <a href="{{ 'master_admin' }}" class="iq-waves-effect"><i
+                                    class="ri-profile-line"></i><span>Master
                                     Admin</span>
                             </a>
                         </li>
@@ -171,12 +178,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- DataTables -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
         src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.11.0/r-2.5.0/rr-1.4.1/sc-2.3.0/sb-1.6.0/datatables.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
 
     @yield('js')
 </body>
