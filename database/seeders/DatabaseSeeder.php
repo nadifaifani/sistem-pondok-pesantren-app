@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Santri;
+use App\Models\WaliSantri;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Santri::factory(20)->create();
+        WaliSantri::factory(20)->create();
     }
 }

@@ -17,12 +17,20 @@ class Santri extends Model
         'alamat_santri', 
         'no_hp_santri', 
         'email_santri', 
-        'status_santri', 
         'ktp_santri', 
         'kk_santri',
+        'akta_santri',
+        'pas_foto_santri', 
+        'status_santri', 
+        'tahun_masuk', 
     ];
 
 
+    public function WaliSantri()
+    {
+        return $this->hasOne(WaliSantri::class, 'id_santri', 'id_santri');
+    }
+    
     public function NilaiSantri()
     {
         return $this->hasMany(NilaiSantri::class, 'id_santri', 'id_santri');

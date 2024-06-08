@@ -129,7 +129,7 @@
                                 <h4 class="card-title">Data Santri</h4>
                             </div>
                             <div class="text-right">
-                                <a type="button" class="btn btn-primary mt-1" href="{{ url('/santri/create/form') }}">
+                                <a type="button" class="btn btn-primary mt-1" href="{{ url('admin/santri/create') }}">
                                     Tambah Santri
                                 </a>
                             </div>
@@ -143,6 +143,8 @@
                                             <th>#</th>
                                             <th>Nama Santri</th>
                                             <th>TTL</th>
+                                            <th>Alamat</th>
+                                            <th>No. HP</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -159,7 +161,7 @@
     </div>
 
     <!-- Info Modal -->
-    {{-- @foreach ($santris as $santri)
+    @foreach ($santris as $santri)
         <div class="modal fade" id="infoModal{{ $santri->id_santri }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -206,11 +208,11 @@
                                     </div>
                                     <div class="mt-2">
                                         <h6>Nama Wali Santri:</h6>
-                                        <p>{{ $santri->nama_wali_santri }}</p>
+                                        <p>{{ $santri->WaliSantri->nama_wali_santri }}</p>
                                     </div>
                                     <div class="mt-2">
                                         <h6>No Hp Wali Santri:</h6>
-                                        <p>{{ $santri->no_hp_wali_santri }}</p>
+                                        <p>{{ $santri->WaliSantri->no_hp }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -253,6 +255,40 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="mt-4">
+                                <h6 class="mb-2">Akta Santri:</h6>
+                                @if ($santri->akta_santri === null)
+                                    <div class="bg-light" style="width: 440px; border-radius:20px;">
+                                        <p class="text-center text-secondary"
+                                            style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
+                                    </div>
+                                @else
+                                    <div class="text-center">
+                                        <img src="{{ asset('berkas_santri/akta_santri/' . $santri->akta_santri) }}"
+                                            alt="" style="max-width: 440px; border-radius: 20px;">
+                                        <p class="mt-2"><a
+                                                href="{{ asset('berkas_santri/akta_santri/' . $santri->akta_santri) }}"
+                                                download>Download Akta</a></p>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="mt-4">
+                                <h6 class="mb-2">Pas Foto Santri:</h6>
+                                @if ($santri->pas_foto_santri === null)
+                                    <div class="bg-light" style="width: 440px; border-radius:20px;">
+                                        <p class="text-center text-secondary"
+                                            style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
+                                    </div>
+                                @else
+                                    <div class="text-center">
+                                        <img src="{{ asset('berkas_santri/pas_foto_santri/' . $santri->pas_foto_santri) }}"
+                                            alt="" style="max-width: 440px; border-radius: 20px;">
+                                        <p class="mt-2"><a
+                                                href="{{ asset('berkas_santri/pas_foto_santri/' . $santri->pas_foto_santri) }}"
+                                                download>Download Akta</a></p>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -261,22 +297,22 @@
                 </div>
             </div>
         </div>
-    @endforeach --}}
+    @endforeach
 
     <!-- Modal Delete -->
-    {{-- @foreach ($santris as $santri)
+    @foreach ($santris as $santri)
         <div class="modal fade" id="deleteModal{{ $santri->id_santri }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                     </div>
-                    <form id="deleteForm" method="post" action="{{ url('/santri/delete/' . $santri->id_santri) }}">
+                    <form id="deleteForm" method="post" action="{{ url('/admin/santri/delete/' . $santri->id_santri) }}">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body text-center">
                             <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
-                            <h3 class="mt-4">Anda yakin ingin hapus data ini ?</h3>
+                            <h3 class="mt-4">Anda yakin ingin hapus data {{ $santri->nama_santri }} ?</h3>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -286,7 +322,7 @@
                 </div>
             </div>
         </div>
-    @endforeach --}}
+    @endforeach
 @endsection
 @section('js')
     <script>
@@ -350,7 +386,7 @@
                                 .id_santri + '">' +
                                 '<i class="ri-information-line"></i>' +
                                 '</a>' +
-                                '<a data-placement="top" title="Edit" href="/santri/' + full
+                                '<a data-placement="top" title="Edit" href="/admin/santri/edit/' + full
                                 .id_santri + '">' +
                                 '<i class="ri-pencil-line"></i>' +
                                 '</a>' +

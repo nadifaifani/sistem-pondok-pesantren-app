@@ -21,13 +21,11 @@ class SantriFactory extends Factory
 
         return [
             'nama_santri' => $this->faker->name,
-            'tempat_tanggal_lahir_santri' => $this->faker->city . ', ' . $this->faker->date,
+            'tempat_tanggal_lahir_santri' => $this->faker->city . ', ' . $this->faker->date('d-m-Y'),
             'jenis_kelamin_santri' => $this->faker->randomElement(['laki-laki', 'perempuan']),
             'alamat_santri' => $this->faker->address,
             'no_hp_santri' => $this->faker->numerify('###########'), // 13 digit random numeric
             'email_santri' => $this->faker->unique()->safeEmail,
-            'nama_wali_santri' => $this->faker->name,
-            'no_hp_wali_santri' => $this->faker->numerify('###########'), // 13 digit random numeric
             'ktp_santri' => 'ktp.png',
             'kk_santri' => 'kk.png',
             'akta_santri' => 'kk.png',

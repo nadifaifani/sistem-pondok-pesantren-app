@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/public/berkas_santri/akta_santri/*
+/public/berkas_santri/kk_santri/*
+/public/berkas_santri/ktp_santri/*
+/public/berkas_santri/pas_foto_santri/*
