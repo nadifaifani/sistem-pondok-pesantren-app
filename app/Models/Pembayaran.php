@@ -15,6 +15,8 @@ class Pembayaran extends Model
         'tanggal_pembayaran',
         'jumlah_pembayaran',
         'jenis_pembayaran',
+        'semester_ajaran',
+        'tahun_ajaran',
         'status_pembayaran',
         'id_santri',
         'id_admin',

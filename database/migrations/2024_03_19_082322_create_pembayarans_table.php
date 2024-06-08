@@ -17,10 +17,12 @@ return new class extends Migration
             $table->id('id_pembayaran');
             $table->unsignedBigInteger('id_santri')->nullable();
             $table->unsignedBigInteger('id_admin')->nullable();
-            $table->dateTime('tanggal_pembayaran');
+            $table->dateTime('tanggal_pembayaran')->nullable();
             $table->integer('jumlah_pembayaran');
-            $table->string('jenis_pembayaran');
-            $table->string('status_pembayaran');
+            $table->enum('jenis_pembayaran', ['daftar_ulang', 'iuran_bulanan', 'tamrin']);
+            $table->enum('semester_ajaran', ['ganjil', 'genap']);
+            $table->year('tahun_ajaran');
+            $table->enum('status_pembayaran', ['belum_lunas', 'lunas'])->default('belum_lunas');
             $table->timestamps();  
 
             $table->foreign('id_santri')->references('id_santri')->on('santris');

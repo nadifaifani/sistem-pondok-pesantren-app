@@ -74,8 +74,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded"
-                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
+                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
+                                                        alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -102,15 +102,14 @@
                             </div>
                         </li>
                         {{-- FullScreen --}}
-                        <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect"
-                                id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></li>
+                        <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen"><i
+                                    class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
                     <li>
                         <a href="#" class="search-toggle iq-waves-effect bg-white text-white"><img
-                                src="{{ asset('images/local/user-1.png') }}" class="img-fluid rounded"
-                                alt="user"></a>
+                                src="{{ asset('images/local/user-1.png') }}" class="img-fluid rounded" alt="user"></a>
                         <div class="iq-sub-dropdown iq-user-dropdown">
                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
                                 <div class="iq-card-body p-0 ">
@@ -193,7 +192,8 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Pembayaran Daftar Ulang</h4>
+                                <h4 class="card-title mt-3">Pembayaran Daftar Ulang</h4>
+                                <p class="text-dark">Semester {{ ucfirst($currentSemester['semester']) }}, Tahun Ajaran {{ $currentSemester['tahun'] }}</p>
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
@@ -204,8 +204,8 @@
                         </div>
                         <div class="iq-card-body">
                             <div class="table-responsive mb-3">
-                                <table id="tableDaftarUlang" class="table" role="grid" aria-describedby="user-list-page-info"
-                                    style="width: 100%; min-height: 500px;">
+                                <table id="tableDaftarUlang" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -214,13 +214,12 @@
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
                                             <th>Status</th>
-                                            <th></th>
+                                            {{-- <th></th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                 </table>
-                                
                             </div>
                         </div>
                     </div>
@@ -229,7 +228,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Create -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -240,15 +239,16 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {{-- <form action="{{ url('/pembayaran/daftar_ulang/create') }}" method="post">
+                <form id="updateForm" method="post">
+                    @method('PUT')
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama_santri">Nama Santri <span class="text-danger">*</span></label>
                             <select class="form-control" name="nama_santri" id="nama_santri">
-                                <option value="Nama Santri">Nama Santri</option>
-                                @foreach ($santris as $santri)
-                                    <option value="{{ $santri->nama_santri }}">{{ $santri->nama_santri }}</option>
+                                <option value="">Pilih Nama Santri</option>
+                                @foreach ($pembayarans as $pembayaran)
+                                    <option value="{{ $pembayaran->santri->id_santri }}">{{ $pembayaran->santri->nama_santri }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -257,7 +257,7 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
-                </form> --}}
+                </form>
             </div>
         </div>
     </div>
@@ -287,4 +287,104 @@
             </div>
         </div>
     @endforeach --}}
+@endsection
+@section('js')
+    {{-- Datatable --}}
+    <script>
+        $(document).ready(function() {
+            $('#tableDaftarUlang').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('daftar_ulang') }}",
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal pembayaran
+                    {
+                        data: 'tanggal_pembayaran',
+                        render: function(data, type, full, meta) {
+                            if (data === null) {
+                                return '<p class="text-muted" >Belum dibayar</p>';
+                            } else {
+                                var tanggal_pembayaran = data.split(' ');
+                                var tanggal = tanggal_pembayaran[0].split(
+                                '-'); // Memisahkan tanggal berdasarkan "-"
+                                var jam = tanggal_pembayaran[1];
+
+                                // Mengubah format tanggal dari Y-m-d ke d-m-Y
+                                var formattedDate = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[
+                                0];
+
+                                return '<p class="mb-0">' +
+                                    formattedDate +
+                                    '</p>' +
+                                    '<p class="mb-0">Jam: ' +
+                                    jam +
+                                    '</p>';
+                            }
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'santri.nama_santri',
+                        name: 'santri.nama_santri'
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pembayaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+                    // Kolom diterima oleh
+                    {
+                        data: 'user.nama_admin',
+                        name: 'user.nama_admin',
+                        render: function(data, type, full, meta) {
+                            if (data === null) {
+                                return '<p class="text-muted" >Belum dibayar</p>';
+                            } else {
+                                return data
+                            }
+                        }
+                    },
+                    // Kolom status pembayaran
+                    {
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
+                        render: function(data, type, full, meta) {
+                            if (full.status_pembayaran == 'belum_lunas') {
+                                return '<span class="badge badge-pill badge-danger">Belum Dibayar</span>';
+                            } else {
+                                return '<span class="badge badge-pill badge-primary">Lunas</span>';
+                            }
+                        }
+                    },
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+
+        });
+    </script>
+
+    {{-- Update --}}
+    <script>
+        // Mengatur URL aksi formulir berdasarkan id_santri yang dipilih
+        document.getElementById('nama_santri').addEventListener('change', function() {
+            var selectedId = this.value;
+            var form = document.getElementById('updateForm');
+            var actionUrl = "{{ url('/admin/daftar_ulang/edit') }}/" + selectedId + "/action";
+            form.setAttribute('action', actionUrl);
+        });
+    </script>
 @endsection

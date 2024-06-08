@@ -65,9 +65,9 @@
                                         href="{{ route('tamrin') }}">Tamrin</a></li>
                             </ul>
                         </li>
-                        <li class="@if (request()->routeIs('pemasukkan')) active @endif">
+                        <li class="@if (request()->routeIs('pemasukan')) active @endif">
                             <a href="{{ route('pemasukan') }}" class="iq-waves-effect"><i
-                                    class="ri-chat-check-line"></i><span>Pemasukkan</span>
+                                    class="ri-chat-check-line"></i><span>Pemasukan</span>
                             </a>
                         </li>
                         <li class="@if (request()->routeIs('pengeluaran')) active @endif">
