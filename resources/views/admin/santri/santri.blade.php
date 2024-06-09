@@ -161,7 +161,7 @@
     </div>
 
     <!-- Info Modal -->
-    @foreach ($santris as $santri)
+    {{-- @foreach ($santris as $santri)
         <div class="modal fade" id="infoModal{{ $santri->id_santri }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -297,7 +297,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach --}}
 
     <!-- Modal Delete -->
     @foreach ($santris as $santri)

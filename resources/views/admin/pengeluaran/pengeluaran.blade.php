@@ -37,7 +37,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -130,7 +130,7 @@
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
-                                    data-target="#exampleModalCenter">
+                                    data-target="#createModal">
                                     Tambah Pengeluaran
                                 </button>
                             </div>
@@ -160,18 +160,18 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    <!-- Modal Create -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pembayaran</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pengeluaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('/pengeluaran/create') }}" method="post">
+                <form action="{{ url('/admin/pengeluaran/create/action') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -198,8 +198,49 @@
         </div>
     </div>
 
+    <!-- Modal Edit -->
+    @foreach ($pengeluarans as $pengeluaran)
+        <div class="modal fade" id="editModal{{ $pengeluaran->id_pengeluaran }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pengeluaran</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ url('/admin/pengeluaran/edit/' . $pengeluaran->id_pengeluaran . '/action') }}" method="post">
+                        @method('PUT')
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nama_pengeluar">Nama Pengeluar <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="nama_pengeluar" name="nama_pengeluar"
+                                    value="{{ $pengeluaran->nama_pengeluar }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="jumlah_pengeluaran">Jumlah Pengeluaran <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="jumlah_pengeluaran" name="jumlah_pengeluaran"
+                                    value="{{ $pengeluaran->jumlah_pengeluaran }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="deskripsi_pengeluaran">Deskripsi Pengeluaran</label>
+                                <textarea class="form-control" id="deskripsi_pengeluaran" name="deskripsi_pengeluaran" rows="4" required>{{ $pengeluaran->deskripsi_pengeluaran }}</textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
     <!-- Modal Delete -->
-    {{-- @foreach ($pengeluarans as $pengeluaran)
+    @foreach ($pengeluarans as $pengeluaran)
         <div class="modal fade" id="deleteModal{{ $pengeluaran->id_pengeluaran }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle{{ $pengeluaran->id_pengeluaran }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -207,12 +248,12 @@
                     <div class="modal-header">
                     </div>
                     <form id="deleteForm" method="post"
-                        action="{{ url('/pengeluaran/delete/' . $pengeluaran->id_pengeluaran) }}">
+                        action="{{ url('/admin/pengeluaran/delete/' . $pengeluaran->id_pengeluaran) }}">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body text-center">
                             <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
-                            <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
+                            <h3 class="mt-4">Anda yakin ingin hapus pengeluaran dari {{ $pengeluaran->nama_pengeluar }}?</h3>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -222,5 +263,92 @@
                 </div>
             </div>
         </div>
-    @endforeach --}}
+    @endforeach
+@endsection
+@section('js')
+    {{-- Datatable --}}
+    <script>
+        $(document).ready(function() {
+            $('#tablePengeluaran').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('pengeluaran') }}",
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal pembayaran
+                    {
+                        data: 'tanggal_pengeluaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pengeluaran = data.split(' ');
+                            var tanggal = tanggal_pengeluaran[0].split(
+                                '-'); // Memisahkan tanggal berdasarkan "-"
+                            var jam = tanggal_pengeluaran[1];
+
+                            // Mengubah format tanggal dari Y-m-d ke d-m-Y
+                            var formattedDate = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[
+                                0];
+
+                            return '<p class="mb-0">' +
+                                formattedDate +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pengeluaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+                    // Kolom diterima oleh
+                    {
+                        data: 'deskripsi_pengeluaran',
+                        name: 'deskripsi_pengeluaran',
+                    },
+                    // Kolom status pembayaran
+                    {
+                        data: 'nama_pengeluar',
+                        name: 'nama_pengeluar',
+                    },
+                    {
+                        data: 'id_pengeluaran',
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Edit" href="#" ' + 
+                                'data-target="#editModal' + full.id_pengeluaran + 
+                                '" data-toggle="modal" ' + 
+                                'data-id="' + full.id_pengeluaran +'">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" ' +
+                                'data-target="#deleteModal' + full.id_pengeluaran +
+                                '" data-toggle="modal" ' +
+                                'data-id="' + full.id_pengeluaran + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>';
+                        }
+                    }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+
+        });
+    </script>
 @endsection
