@@ -12,7 +12,7 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Santri</h5>
+                <h5 class="mb-0">Edit Santri</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>

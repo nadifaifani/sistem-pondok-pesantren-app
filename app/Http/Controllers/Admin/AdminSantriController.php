@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Santri;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Pembayaran;
 use App\Models\WaliSantri;
+use Illuminate\Http\Request;
+use App\Helpers\SemesterHelper;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -16,7 +19,7 @@ class AdminSantriController extends Controller
         $data['title'] = 'Santri';
 
         $santris = Santri::with('waliSantri')->get();
-        
+
         if ($request->ajax()) {
             $data = Santri::orderBy('created_at', 'desc')->get();
             return DataTables::of($data)
@@ -89,7 +92,6 @@ class AdminSantriController extends Controller
                 'pas_foto_santri.mimes' => 'Format file Pas Foto harus jpeg, png, jpg, atau gif!',
                 'pas_foto_santri.max' => 'Ukuran file Pas Foto maksimal 2 MB!',
             ]);
-            
 
             $ktpSantri = $request->file('ktp_santri');
             $kkSantri = $request->file('kk_santri');
@@ -139,6 +141,48 @@ class AdminSantriController extends Controller
                 'alamat_wali_santri' => $request->input('alamat_wali_santri'),
             ]);
 
+            //* Pembayaran
+            $currentSemester = SemesterHelper::getCurrentSemester();
+            // Daftar Ulang
+            $pembayaranDaftarUlang = Pembayaran::create([
+                'id_santri' => $santri->id_santri,
+                'id_admin' => null,
+                'tanggal_pembayaran' => null,
+                'jumlah_pembayaran' => 50000,
+                'jenis_pembayaran' => 'daftar_ulang',
+                'status_pembayaran' => 'belum_lunas',
+                'tahun_ajaran' => $currentSemester['tahun'],
+                'semester_ajaran' => $currentSemester['semester'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            // Iuran Bulanan
+            $pembayaranIuranBulanan = Pembayaran::create([
+                'id_santri' => $santri->id_santri,
+                'id_admin' => null,
+                'tanggal_pembayaran' => null,
+                'jumlah_pembayaran' => 100000,
+                'jenis_pembayaran' => 'iuran_bulanan',
+                'status_pembayaran' => 'belum_lunas',
+                'tahun_ajaran' => $currentSemester['tahun'],
+                'semester_ajaran' => $currentSemester['semester'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            // Tamrin
+            $pembayaranTamrin = Pembayaran::create([
+                'id_santri' => $santri->id_santri,
+                'id_admin' => null,
+                'tanggal_pembayaran' => null,
+                'jumlah_pembayaran' => 50000,
+                'jenis_pembayaran' => 'tamrin',
+                'status_pembayaran' => 'belum_lunas',
+                'tahun_ajaran' => $currentSemester['tahun'],
+                'semester_ajaran' => $currentSemester['semester'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
             return redirect()->route('santri')->with('success', 'Data santri berhasil ditambahkan.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors());
@@ -148,12 +192,58 @@ class AdminSantriController extends Controller
 
     }
 
+    public function index_info($id_santri)
+    {
+        $data['title'] = 'Santri';
+
+        $santri = Santri::where('id_santri', $id_santri)->first();
+
+        $wali = WaliSantri::where('id_santri', $id_santri)->first();
+
+        $currentSemester = SemesterHelper::getCurrentSemester();
+        $RiwayatPembayaran = Pembayaran::where('id_santri', $id_santri)
+            ->where('status_pembayaran', 'lunas')
+            ->with(['santri', 'user'])
+            ->orderBy('tanggal_pembayaran', 'desc')
+            ->get();
+
+        $TagihanPembayaran = Pembayaran::where('id_santri', $id_santri)
+            ->where('status_pembayaran', 'belum_lunas')
+            ->with(['santri', 'user'])
+            ->orderBy('tahun_ajaran', 'asc')
+            ->get();
+        return view('admin.santri.info.info', [
+            'santri' => $santri,
+            'wali' => $wali,
+            'RiwayatPembayaran' => $RiwayatPembayaran,
+            'TagihanPembayaran' => $TagihanPembayaran,
+        ], $data);
+    }
+
+    public function update_pembayaran(Request $request, $jenis_pembayaran, $id_pembayaran)
+    {
+        $pembayaran = Pembayaran::where('jenis_pembayaran', $jenis_pembayaran)
+            ->where('id_pembayaran', $id_pembayaran)
+            ->first();
+
+        if ($pembayaran) {
+            $pembayaran->tanggal_pembayaran = now();
+            $pembayaran->id_admin = Auth::user()->id_admin;
+            $pembayaran->status_pembayaran = 'lunas';
+            $pembayaran->save();
+
+            return redirect()->back()->with('success', 'Pembayaran berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
+        }
+    }
+
     public function index_edit(Request $request, $id_santri)
     {
         $data['title'] = 'Santri';
 
         $santri = Santri::where('id_santri', $id_santri)->first();
-        
+
         $wali_santri = WaliSantri::where('id_santri', $id_santri)->first();
 
         return view('admin.santri.edit.edit', [
@@ -213,7 +303,7 @@ class AdminSantriController extends Controller
                     'kk_santri' => $kkSantriName,
                 ]);
             }
-            
+
             if ($request->hasFile('akta_santri')) {
                 $aktaSantri = $request->file('akta_santri');
                 $aktaSantriName = $nama_santri . "_" . uniqid() . "_" . $aktaSantri->getClientOriginalName();
@@ -259,21 +349,21 @@ class AdminSantriController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
-        
-    }  
+
+    }
 
     public function delete($id_santri)
     {
         try {
             // Hapus wali santri
-            $wali_santri = WaliSantri::where('id_santri',$id_santri);
+            $wali_santri = WaliSantri::where('id_santri', $id_santri);
             if (!$wali_santri) {
                 throw new \Exception('Wali santri tidak ditemukan.');
             }
             $wali_santri->delete();
 
             // Hapus santri
-            $santri = Santri::where('id_santri',$id_santri);
+            $santri = Santri::where('id_santri', $id_santri);
             if (!$santri) {
                 throw new \Exception('Santri tidak ditemukan.');
             }

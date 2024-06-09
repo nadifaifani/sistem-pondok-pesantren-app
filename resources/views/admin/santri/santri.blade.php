@@ -307,7 +307,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                     </div>
-                    <form id="deleteForm" method="post" action="{{ url('/admin/santri/delete/' . $santri->id_santri) }}">
+                    <form id="deleteForm" method="post"
+                        action="{{ url('/admin/santri/delete/' . $santri->id_santri) }}">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body text-center">
@@ -381,14 +382,9 @@
                         render: function(data, type, full, meta) {
                             return '<td class="text-center">' +
                                 '<div class="d-flex align-items-center list-user-action">' +
-                                '<a data-placement="top" title="Info" href="#" data-target="#infoModal' +
-                                full.id_santri + '" data-toggle="modal" data-id="' + full
-                                .id_santri + '">' +
+                                '<a data-placement="top" title="Info" href="/admin/santri/' + full
+                                .id_santri + '/info">' +
                                 '<i class="ri-information-line"></i>' +
-                                '</a>' +
-                                '<a data-placement="top" title="Edit" href="/admin/santri/edit/' + full
-                                .id_santri + '">' +
-                                '<i class="ri-pencil-line"></i>' +
                                 '</a>' +
                                 '<a data-placement="top" title="Delete" href="#" data-target="#deleteModal' +
                                 full.id_santri + '" data-toggle="modal" data-id="' + full
