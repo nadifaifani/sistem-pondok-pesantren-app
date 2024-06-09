@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pengeluaran;
 use App\Models\Santri;
 use App\Models\WaliSantri;
 use App\Models\Pembayaran;
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
 
         Santri::factory(20)->create();
         WaliSantri::factory(20)->create();
+        Pengeluaran::factory(10)->create();
         
         $this->call(PembayaranSeeder::class);
     }
