@@ -37,7 +37,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -130,7 +130,7 @@
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
-                                    data-target="#exampleModalCenter">
+                                    data-target="#createModal">
                                     Tambah Pemasukan
                                 </button>
                             </div>
@@ -159,8 +159,8 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    <!-- Modal Create -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -170,7 +170,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('/pemasukan/create') }}" method="post">
+                <form action="{{ url('/admin/pemasukan/create/action') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -192,6 +192,153 @@
         </div>
     </div>
 
+    <!-- Modal Edit -->
+    @foreach ($pemasukans as $pemasukan)
+    <div class="modal fade" id="editModal{{ $pemasukan->id_pemasukan }}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pemasukan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('/admin/pemasukan/edit/' . $pemasukan->id_pemasukan . '/action') }}" method="post">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="jumlah_pemasukan">Jumlah Pemasukan <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="jumlah_pemasukan" name="jumlah_pemasukan"
+                                value="{{ $pemasukan->jumlah_pemasukan }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi_pemasukan">Deskripsi Pemasukan</label>
+                            <textarea class="form-control" id="deskripsi_pemasukan" name="deskripsi_pemasukan" rows="4" required>{{ $pemasukan->deskripsi_pemasukan }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    
     <!-- Modal Delete -->
-    {{-- l --}}
+    @foreach ($pemasukans as $pemasukan)
+        <div class="modal fade" id="deleteModal{{ $pemasukan->id_pemasukan }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle{{ $pemasukan->id_pemasukan }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <form id="deleteForm" method="post"
+                        action="{{ url('/admin/pemasukan/delete/' . $pemasukan->id_pemasukan) }}">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body text-center">
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
+                            <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+@endsection
+@section('js')
+    {{-- Datatable --}}
+    <script>
+        $(document).ready(function() {
+                    $('#tablePemasukan').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            ajax: "{{ route('pemasukan') }}",
+                            columns: [
+                                // Kolom nomor urut
+                                {
+                                    data: null,
+                                    searchable: false,
+                                    orderable: false,
+                                    render: function(data, type, row, meta) {
+                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                    }
+                                },
+                                // Kolom tanggal pemasukan
+                                {
+                                    data: 'tanggal_pemasukan',
+                                    render: function(data, type, full, meta) {
+
+                                            var tanggal_pemasukan = data.split(' ');
+                                            var tanggal = tanggal_pemasukan[0].split(
+                                                '-'); // Memisahkan tanggal berdasarkan "-"
+                                            var jam = tanggal_pemasukan[1];
+
+                                            // Mengubah format tanggal dari Y-m-d ke d-m-Y
+                                            var formattedDate = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[
+                                                0];
+
+                                            return '<p class="mb-0">' +
+                                                formattedDate +
+                                                '</p>' +
+                                                '<p class="mb-0">Jam: ' +
+                                                jam +
+                                                '</p>';
+                                        }
+                                    },
+
+                                    // Kolom jumlah pemasukan
+                                    {
+                                        data: 'jumlah_pemasukan',
+                                        render: function(data, type, full, meta) {
+                                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                                                ",");
+                                        }
+                                    },
+                                    // Kolom diterima oleh
+                                    {
+                                        data: 'deskripsi_pemasukan',
+                                        name: 'deskripsi_pemasukan',
+                                    },
+
+                                    {
+                                        data: 'id_pemasukan',
+                                        searchable: false,
+                                        orderable: false,
+                                        render: function(data, type, full, meta) {
+                                            return '<div class="d-flex align-items-center list-user-action">' +
+                                                '<a data-placement="top" title="Edit" href="#"' + 
+                                                'data-target="#editModal' + full.id_pemasukan + 
+                                                '" data-toggle="modal" ' + 
+                                                'data-id="' + full.id_pemasukan + '">' +
+                                                '<i class="ri-pencil-line"></i>' +
+                                                '</a>' +
+                                                '<a data-placement="top" title="Delete" href="#" ' +
+                                                'data-target="#deleteModal' + full.id_pemasukan +
+                                                '" data-toggle="modal" ' +
+                                                'data-id="' + full.id_pemasukan + '">' +
+                                                '<i class="ri-delete-bin-line"></i>' +
+                                                '</a>' +
+                                                '</div>';
+                                        }
+                                    }
+                                ],
+                                lengthMenu: [
+                                    [10, 25, 50, 100, -
+                                    1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                                    ['10', '25', '50', '100', 'Semua']
+                                ]
+                            });
+
+                    });
+    </script>
 @endsection
