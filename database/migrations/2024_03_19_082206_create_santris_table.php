@@ -17,15 +17,15 @@ return new class extends Migration
             $table->id('id_santri');
             $table->string('nama_santri');
             $table->string('tempat_tanggal_lahir_santri');
-            $table->string('jenis_kelamin_santri'); 
-            $table->string('alamat_santri');  
             $table->string('no_hp_santri');
             $table->string('email_santri')->unique();
+            $table->string('jenis_kelamin_santri'); 
+            $table->string('status_santri');
+            $table->string('alamat_santri');  
             $table->string('ktp_santri');
             $table->string('kk_santri');
             $table->string('akta_santri');
             $table->string('pas_foto_santri');
-            $table->string('status_santri');
             $table->string('tahun_masuk');
             $table->timestamps();
 

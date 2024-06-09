@@ -140,8 +140,11 @@
                                         </div>
                                     </a>
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="iq-bg-danger iq-sign-btn btn-block" href="{{ url('/logout') }}"
-                                            role="button">Keluar<i class="ri-login-box-line ml-2"></i></a>
+                                        <form action="{{ url('/logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="iq-bg-danger iq-sign-btn btn-block">Keluar<i
+                                                    class="ri-login-box-line ml-2"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

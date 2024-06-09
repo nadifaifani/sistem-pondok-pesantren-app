@@ -195,7 +195,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="nama_wali_santri">Nama Wali Santri <span
+                                        <label for="nama_wali_santri">Nama Wali Santri<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="nama_wali_santri"
                                             name="nama_wali_santri" value="{{ old('nama_wali_santri') }}" required>
@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="no_hp_wali_santri">No Hp Wali Santri <span
+                                        <label for="no_hp_wali_santri">No Hp Wali Santri<span
                                                 class="text-danger">*</span></label>
                                         <input type="number" class="form-control" id="no_hp_wali_santri"
                                             name="no_hp_wali_santri" value="{{ old('no_hp_wali_santri') }}" required>
@@ -213,7 +213,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="email_wali_santri">Email Wali Santri <span
+                                        <label for="email_wali_santri">Email Wali Santri<span
                                                 class="text-danger">*</span></label>
                                         <input type="email" class="form-control" id="email_wali_santri"
                                             name="email_wali_santri" value="{{ old('email_wali_santri') }}" required>
@@ -233,7 +233,7 @@
                                                 return $password;
                                             }
                                         @endphp
-                                        <label for="password_wali_santri">Password Wali Santri <span
+                                        <label for="password_wali_santri">Password Wali Santri<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control text-dark" id="password_wali_santri"
                                             name="password_wali_santri" value="{{ generatePassword() }}" required>
@@ -241,21 +241,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="alamat_wali_santri">Alamat Wali Santri <span
+                                <label for="alamat_wali_santri">Alamat Wali Santri<span
                                         class="text-danger">*</span></label>
                                 <textarea class="form-control" id="alamat_wali_santri" name="alamat_wali_santri" rows="2" required>{{ old('alamat_wali_santri') }}</textarea>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="ktp_santri">KTP Santri <span class="text-danger">*</span></label>
+                                        <label for="ktp_santri">KTP Santri<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control-file" id="ktp_santri"
                                             name="ktp_santri" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="kk_santri">KK Santri <span class="text-danger">*</span></label>
+                                        <label for="kk_santri">KK Santri<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control-file" id="kk_santri" name="kk_santri"
                                             required>
                                     </div>
@@ -264,7 +264,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="akta_santri">Akta Kelahiran Santri <span
+                                        <label for="akta_santri">Akta Kelahiran Santri<span
                                                 class="text-danger">*</span></label>
                                         <input type="file" class="form-control-file" id="akta_santri"
                                             name="akta_santri" required>
@@ -272,7 +272,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="pas_foto_santri">Pas Foto Santri <span
+                                        <label for="pas_foto_santri">Pas Foto Santri<span
                                                 class="text-danger">*</span></label>
                                         <input type="file" class="form-control-file" id="pas_foto_santri"
                                             name="pas_foto_santri" required>

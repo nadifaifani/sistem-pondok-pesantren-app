@@ -36,19 +36,82 @@
                         <form action="" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="nama" name="nama"
+                                <label for="nama_pendaftar" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama_pendaftar" name="nama_pendaftar"
                                     placeholder="Masukkan nama">
                             </div>
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Tempat lahir</label>
-                                <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
-                                    placeholder="Masukkan nama">
+                                <label for="tempat_lahir_pendaftar" class="form-label">Tempat lahir</label>
+                                <input type="text" class="form-control" id="tempat_lahir_pendaftar" name="tempat_lahir_pendaftar"
+                                    placeholder="Masukkan Tempat Lahir">
                             </div>
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Tanggal lahir</label>
-                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
-                                    placeholder="Masukkan nama">
+                                <label for="tanggal_lahir_pendaftar" class="form-label">Tanggal lahir</label>
+                                <input type="date" class="form-control" id="tanggal_lahir_pendaftar" name="tanggal_lahir_pendaftar"
+                                    placeholder="Masukkan Tanggal Lahir">
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_hp_pendaftar" class="form-label">No Hp</label>
+                                <input type="text" class="form-control" id="no_hp_pendaftar" name="no_hp_pendaftar"
+                                    placeholder="Masukkan No Hp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email_pendaftar" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email_pendaftar" name="email_pendaftar"
+                                    placeholder="Masukkan Email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jenis_kelamin_pendaftar" class="form-label">Jenis Kelamin</label>
+                                <select class="form-control" name="jenis_kelamin_santri" id="jenis_kelamin_santri" required>
+                                    <option value="laki-laki" @if (old('jenis_kelamin_santri') == 'laki-laki') selected @endif>
+                                        Laki Laki</option>
+                                    <option value="perempuan" @if (old('jenis_kelamin_santri') == 'perempuan') selected @endif>
+                                        Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="alamat_pendaftar" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat_pendaftar" name="alamat_pendaftar" rows="2" required>{{ old('alamat_pendaftar') }}</textarea>   
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_wali_pendaftar" class="form-label">Nama Wali</label>
+                                <input type="text" class="form-control" id="nama_wali_pendaftar" name="nama_wali_pendaftar"
+                                     placeholder="Masukkan Nama Wali">
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_hp_wali_pendaftar" class="form-label">No Hp Wali</label>
+                                <input type="text" class="form-control" id="no_hp_wali" name="no_hp_wali_pendaftar"
+                                    placeholder="Masukkan No Hp Wali">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email_wali_pendaftar" class="form-label">Email Wali</label>
+                                <input type="text" class="form-control" id="email_wali_pendaftar" name="email_wali_pendaftar"
+                                    placeholder="Masukkan Email Wali">
+                            </div>
+                            <div class="mb-3">
+                                <label for="alamat_wali_pendaftar" class="form-label">Alamat Wali</label>
+                                <input type="text" class="form-control" id="alamat_wali_pendaftar" name="alamat_wali_pendaftar"
+                                    placeholder="Masukkan Alamat Wali">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ktp_pendaftar" class="form-label">KTP</label>
+                                <input type="file" class="form-control" id="ktp_pendaftar"
+                                        name="ktp_pendaftar" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kk_pendaftar" class="form-label">Kartu Keluarga</label>
+                                <input type="file" class="form-control" id="kk_pendaftar"
+                                        name="kk_pendaftar" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="akta_kelahiran_pendaftar" class="form-label">Akta Kelahiran</label>
+                                <input type="file" class="form-control" id="akta_kelahiran_pendaftar"
+                                        name="akta_kelahiran_pendaftar" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pasfoto_pendaftar" class="form-label">Pas Foto</label>
+                                <input type="file" class="form-control" id="pasfoto_pendaftar"
+                                        name="pasfoto_pendaftar" required>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary col-12" type="submit">Daftarkan Santri</button>
