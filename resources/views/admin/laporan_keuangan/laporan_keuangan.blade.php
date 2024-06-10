@@ -203,7 +203,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Tanggal Pemasukan</th>
-                                            <th>Nama Santri</th>
+                                            <th>Asal Pemasukan</th>
                                             <th>Jumlah Pemasukan</th>
                                             <th>Diterima Oleh</th>
                                             <th>Jenis Pemasukan</th>
@@ -353,6 +353,188 @@
 
             const chartKeuanganInstance = new ApexCharts(document.querySelector("#chart_keuangan"), chartKeuangan);
             chartKeuanganInstance.render();
+        });
+    </script>
+
+    {{-- Datatable Pemasukan --}}
+    <script>
+        $(document).ready(function() {
+            $('#tablePemasukan').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('getPemasukan') }}",
+                columns: [{
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: 'tanggal_pemasukan',
+                        name: 'tanggal_pemasukan',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pemasukan = data.split(' ');
+                            var tanggal = tanggal_pemasukan[0].split(
+                                '-'); // Memisahkan tanggal berdasarkan "-"
+                            var jam = tanggal_pemasukan[1];
+
+                            // Mengubah format tanggal dari Y-m-d ke d-m-Y
+                            var formattedDate = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[
+                                0];
+
+                            return '<p class="mb-0">' +
+                                formattedDate +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    {
+                        data: 'santri.nama_santri',
+                        name: 'santri.nama_santri',
+                        render: function(data, type, full, meta) {
+                            if (full.santri.nama_santri == 'Sumbangan') {
+                                return 'Sumbangan luar';
+                            } else {
+                                return 'Santri : ' + full.santri.nama_santri
+                            }
+                        }
+                    },
+                    {
+                        data: 'jumlah_pemasukan',
+                        name: 'jumlah_pemasukan',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+                    {
+                        data: 'user.nama_admin',
+                        name: 'user.nama_admin'
+                    },
+                    {
+                        data: 'jenis_pemasukan',
+                        name: 'jenis_pemasukan',
+                        render: function(data, type, full, meta) {
+                            switch (full.jenis_pemasukan) {
+                                case 'daftar_ulang':
+                                    return '<span class="badge badge-pill badge-danger">Daftar Ulang</span>';
+                                case 'iuran_bulanan':
+                                    return '<span class="badge badge-pill badge-warning">Iuran Bulanan</span>';
+                                case 'iru':
+                                    return '<span class="badge badge-pill badge-success">Tamrin</span>';
+                                default:
+                                    return '<span class="badge badge-pill badge-primary">Lainnya</span>';
+                            }
+                        }
+                    }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+        });
+    </script>
+
+    {{-- Datatable Pengeluaran --}}
+    <script>
+        $(document).ready(function() {
+            $('#tablePengeluaran').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('pengeluaran') }}",
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal pembayaran
+                    {
+                        data: 'tanggal_pengeluaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pengeluaran = data.split(' ');
+                            var tanggal = tanggal_pengeluaran[0].split(
+                                '-'); // Memisahkan tanggal berdasarkan "-"
+                            var jam = tanggal_pengeluaran[1];
+
+                            // Mengubah format tanggal dari Y-m-d ke d-m-Y
+                            var formattedDate = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[
+                                0];
+
+                            return '<p class="mb-0">' +
+                                formattedDate +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pengeluaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+                    // Kolom diterima oleh
+                    {
+                        data: 'deskripsi_pengeluaran',
+                        name: 'deskripsi_pengeluaran',
+                    },
+                    // Kolom status pembayaran
+                    {
+                        data: 'nama_pengeluar',
+                        name: 'nama_pengeluar',
+                    }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+
+        });
+    </script>
+
+    {{-- Export Data --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk menangani ekspor Excel
+            function exportToExcel(exportButtonId, tableId, fileName) {
+                const exportButton = document.getElementById(exportButtonId);
+                const table = document.getElementById(tableId);
+
+                if (!table) {
+                    console.error(`Table with ID '${tableId}' not found.`);
+                    return;
+                }
+
+                exportButton.addEventListener('click', function() {
+                    // Mengonversi seluruh tabel menjadi objek lembar kerja
+                    const ws = XLSX.utils.table_to_sheet(table);
+
+                    // Membuat buku kerja baru
+                    const wb = XLSX.utils.book_new();
+
+                    // Menambahkan lembar kerja ke buku kerja
+                    XLSX.utils.book_append_sheet(wb, ws, 'Data');
+
+                    // Menyimpan file Excel
+                    XLSX.writeFile(wb, fileName);
+                });
+            }
+
+            // Memanggil fungsi untuk tombol "Export to Excel" dengan parameter yang sesuai
+            exportToExcel('exportPemasukanExcel', 'tablePemasukan', 'pemasukan.xlsx');
+            exportToExcel('exportPengeluaranExcel', 'tablePengeluaran', 'pengeluaran.xlsx');
         });
     </script>
 @endsection

@@ -6,7 +6,9 @@ use App\Models\Pemasukan;
 use App\Models\Pembayaran;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
+use App\Helpers\SemesterHelper;
 use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 
 class AdminLaporanKeuanganController extends Controller
 {
@@ -78,5 +80,40 @@ class AdminLaporanKeuanganController extends Controller
             'totalkeuangan' => $totalkeuangan,
             'chartDataKeuangan' => $mergedData,
         ], $data);
+    }
+    
+
+    public function getPemasukan()
+    {
+        $currentSemester = SemesterHelper::getCurrentSemester();
+
+        $pembayarans = Pembayaran::where('status_pembayaran', 'lunas')
+            ->orderBy('tanggal_pembayaran', 'desc')
+            ->with('santri', 'user')
+            ->get();
+        $pemasukans = Pemasukan::with('user')
+            ->orderBy('created_at', 'desc')    
+            ->get();
+
+        // Gabungkan data dari dua tabel
+        $data = $pembayarans->merge($pemasukans);
+
+        return DataTables::of($data)
+            ->addColumn('santri.nama_santri', function($item) {
+                return $item->santri->nama_santri ?? 'Sumbangan';
+            })
+            ->addColumn('jumlah_pemasukan', function($item) {
+                return $item->jumlah_pemasukan ?? $item->jumlah_pembayaran;
+            })
+            ->addColumn('tanggal_pemasukan', function($item) {
+                return $item->tanggal_pembayaran ?? $item->tanggal_pemasukan;
+            })
+            ->addColumn('jenis_pemasukan', function($item) {
+                return isset($item->jenis_pembayaran) ? $item->jenis_pembayaran : 'lainnya';
+            })
+            ->addColumn('user.nama_admin', function($item) {
+                return $item->user->nama_admin ?? 'Lainnya';
+            })
+            ->make(true);
     }
 }

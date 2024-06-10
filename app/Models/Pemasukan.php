@@ -21,6 +21,6 @@ class Pemasukan extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id_admin');
+        return $this->hasOne(User::class, 'id_admin', 'id_admin');
     }
 }

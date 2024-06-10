@@ -55,6 +55,8 @@ Route::middleware(['auth:web'])->group(function () {
   Route::put('/admin/pengeluaran/edit/{id}/action', [AdminPengeluaranController::class, 'edit']);
   Route::delete('/admin/pengeluaran/delete/{id}', [AdminPengeluaranController::class, 'delete']);
   Route::get('/admin/laporan_keuangan', [AdminLaporanKeuanganController::class, 'index'])->name('laporan_keuangan');
+  Route::get('/admin/laporan_keuangan/pemasukan_data', [AdminLaporanKeuanganController::class, 'getPemasukan'])->name('getPemasukan');
+  Route::get('/admin/laporan_keuangan/pengeluaran_data', [AdminLaporanKeuanganController::class, 'getPengeluaran'])->name('getPengeluaran');
   Route::get('/admin/santri', [AdminSantriController::class, 'index'])->name('santri');
   Route::get('/admin/santri/{id}/info', [AdminSantriController::class, 'index_info']);
   Route::put('/admin/santri/pembayaran/{jenis_pembayaran}/{id_pembayaran}/update', [AdminSantriController::class, 'update_pembayaran']);
