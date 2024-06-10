@@ -305,11 +305,10 @@
                                         @if (!$RiwayatPembayaran->isEmpty())
                                             @foreach ($RiwayatPembayaran as $pembayaran)
                                                 @php
-                                                    setlocale(LC_TIME, 'id_ID'); // Atur locale menjadi bahasa Indonesia
 
                                                     $tanggal_pembayaran = \Carbon\Carbon::parse(
                                                         $pembayaran->tanggal_pembayaran,
-                                                    )->formatLocalized('%d %B %Y'); // Format tanggal dengan hari dan bulan dalam bahasa Indonesia
+                                                    )->translatedFormat('d F Y'); // Format tanggal dengan hari dan bulan dalam bahasa Indonesia
 
                                                     $variabel_jam = \Carbon\Carbon::parse(
                                                         $pembayaran->tanggal_pembayaran,

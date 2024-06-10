@@ -48,7 +48,7 @@
                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
                                 <div class="iq-card-body p-0 ">
                                     <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white line-height">Nama User</h5>
+                                        <h5 class="mb-0 text-white line-height">{{Auth::user()->nama_wali_santri}}</h5>
                                         <span class="text-white font-size-12">Online</span>
                                     </div>
                                     <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
@@ -112,15 +112,15 @@
                                     aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
                                     <thead>
                                         <tr>
-                                            <td><b>MUHAMMAD ARHAN</b></td>
+                                            <td><b>{{ strtoupper($santri->nama_santri) }}</b></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Tahun <b>2024</b></td>
+                                            <td>Tahun <b>{{ $currentSemester['tahun'] }}</b></td>
                                         </tr>
                                         <tr>
-                                            <td>Semester <b>Ganjil</b></td>
+                                            <td>Semester <b>{{ ucfirst($currentSemester['semester']) }}</b></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -132,44 +132,79 @@
                                                             <th>Jenis</th>
                                                             <th>Tanggal Awal Pembayaran</th>
                                                             <th>Tanggal Akhir Pembayaran</th>
+                                                            <th>Tanggal Pembayaran</th>
                                                             <th class="text-center">Status</th>
                                                             <th class="text-center">Nominal</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @if (!$TagihanPembayaran->isEmpty())
+                                                            @foreach ($TagihanPembayaran as $pembayaran)
+                                                                @php
+
+                                                                    $tanggal_pembayaran = \Carbon\Carbon::parse(
+                                                                        $pembayaran->tanggal_pembayaran,
+                                                                    )->translatedFormat('d F Y'); // Format tanggal dengan hari dan bulan dalam bahasa Indonesia
+
+                                                                    $variabel_jam = \Carbon\Carbon::parse(
+                                                                        $pembayaran->tanggal_pembayaran,
+                                                                    )->format('H:i'); // Format waktu
+
+                                                                @endphp
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ ucwords(str_replace('_', ' ', $pembayaran->jenis_pembayaran)) }}
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($currentSemester['semester'] == 'ganjil')
+                                                                            1 Februari {{ $currentSemester['tahun'] }}
+                                                                        @else
+                                                                            1 Agustus {{ $currentSemester['tahun'] }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($currentSemester['semester'] == 'ganjil')
+                                                                            1 Juli {{ $currentSemester['tahun'] }}
+                                                                        @else
+                                                                            1 Oktober {{ $currentSemester['tahun'] }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if (is_null($pembayaran->tanggal_pembayaran))
+                                                                        Belum bayar
+                                                                        @else
+                                                                        {{ $tanggal_pembayaran }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td class="text-center"> 
+                                                                        @if ($pembayaran->status_pembayaran == 'lunas')
+                                                                            <span class="badge badge-success">Lunas</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger">Belum Lunas</span>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td class="text-center">Rp
+                                                                        {{ number_format($pembayaran->jumlah_pembayaran, 0, ',', '.') }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
                                                         <tr>
-                                                            <td>1</td>
-                                                            <td>Daftar Ulang</td>
-                                                            <td>27 Mei 2024</td>
-                                                            <td>10 Juni 2024</td>
-                                                            <td class="text-center"><span class="badge badge-danger">Belum Lunas</span></td>
-                                                            <td class="text-center">Rp 100,000,00</td>
+                                                            <th class="text-center" colspan="7">Tidak ada tagihan</th>
                                                         </tr>
+                                                        @endif
                                                         <tr>
-                                                            <td>2</td>
-                                                            <td>Iuran Bulanan</td>
-                                                            <td>27 Mei 2024</td>
-                                                            <td>27 Juni 2024</td>
-                                                            <td class="text-center"><span class="badge badge-danger">Belum Lunas</span></td>
-                                                            <td class="text-center">Rp 50,000,00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Tamrin</td>
-                                                            <td>27 Mei 2024</td>
-                                                            <td>27 Juni 2024</td>
-                                                            <td class="text-center"><span class="badge badge-danger">Belum Lunas</span></td>
-                                                            <td class="text-center">Rp 80,000,00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th colspan="5">Total Tagihan</th>
-                                                            <th class="text-center">Rp 280,000,00</th>
+                                                            <th colspan="6">Total Tagihan</th>
+                                                            <th class="text-center">
+                                                                {{ 'RP ' . number_format($totaltagihan, 0, ',', '.') }}
+                                                            </th>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                                 <div class="alert alert-primary" role="alert">
-                                                    <div class="iq-alert-text">Anda memiliki tagihan senilai <b>Rp 280,000,00</b>, silahkan melakukan pembayaran di <b>Kantor Tata Usaha Pondok Pesantren AL HUDA</b>.</div>
-                                                 </div>
+                                                    <div class="iq-alert-text">Anda memiliki tagihan senilai <b>{{ 'RP ' . number_format($totaltagihan, 0, ',', '.') }}</b>, 
+                                                        silahkan melakukan pembayaran di <b>Kantor Tata Usaha Pondok Pesantren AL HUDA</b>.</div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
