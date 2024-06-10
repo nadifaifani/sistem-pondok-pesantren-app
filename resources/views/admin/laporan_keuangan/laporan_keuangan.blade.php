@@ -37,7 +37,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -102,8 +102,8 @@
                             </div>
                             <span class="float-right line-height-6">Pemasukan Pondok</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        3000</span></h2>
+                                <h2 class="mb-5"><span
+                                        class="">{{ 'Rp. ' . number_format($totalpemasukan, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
@@ -115,8 +115,8 @@
                             </div>
                             <span class="float-right line-height-6">Total Pengeluaran</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        3000</span></h2>
+                                <h2 class="mb-5"><span
+                                        class="">{{ 'Rp. ' . number_format($totalpengeluaran, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
@@ -124,12 +124,12 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-body pb-0">
-                            <div class="rounded-circle iq-card-icon iq-bg-success"><i
-                                    class="ri-bar-chart-grouped-line"></i></div>
+                            <div class="rounded-circle iq-card-icon iq-bg-success"><i class="ri-bar-chart-grouped-line"></i>
+                            </div>
                             <span class="float-right line-height-6">Total Keuangan</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        3000</span></h2>
+                                <h2 class="mb-5"><span
+                                        class="">{{ 'Rp. ' . number_format($totalkeuangan, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
@@ -190,8 +190,9 @@
                                 <h4 class="card-title">Pemasukan Pondok</h4>
                             </div>
                             <div class="col text-right">
-                                <button id="exportPemasukanExcel" class="btn text-white" style="background-color: #209e62;"><i
-                                        class="ri-file-excel-2-fill"></i> Export</button>
+                                <button id="exportPemasukanExcel" class="btn text-white"
+                                    style="background-color: #209e62;"><i class="ri-file-excel-2-fill"></i>
+                                    Export</button>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -227,8 +228,8 @@
                                 <h4 class="card-title">Pengeluaran Pondok</h4>
                             </div>
                             <div class="col text-right">
-                                <button id="exportPengeluaranExcel" class="btn text-white" style="background-color: #209e62"><i
-                                        class="ri-file-excel-2-fill"></i> Export</button>
+                                <button id="exportPengeluaranExcel" class="btn text-white"
+                                    style="background-color: #209e62"><i class="ri-file-excel-2-fill"></i> Export</button>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -254,4 +255,104 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    {{-- Chart keuangan --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data from PHP
+            const chartData = @json($chartDataKeuangan);
+
+            // Extract data for chart
+            const pemasukan = chartData.map(item => item.total_pemasukan);
+            const pengeluaran = chartData.map(item => item.total_pengeluaran);
+            const bulanTahun = chartData.map(item => {
+                const namaBulan = new Date(item.tahun, item.bulan - 1, 1).toLocaleDateString('id-ID', {
+                    month: 'long'
+                });
+                return `${namaBulan} ${item.tahun}`;
+            });
+
+            // Configure and render chart
+            const chartKeuangan = {
+                chart: {
+                    height: 407,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: [2, 3],
+                    curve: 'smooth',
+                    dashArray: [0, 5]
+                },
+                colors: ['#00ca00', '#007bff'],
+                series: [{
+                        name: "Pemasukan",
+                        type: 'area',
+                        data: pemasukan
+                    },
+                    {
+                        name: "Pengeluaran",
+                        type: 'line',
+                        data: pengeluaran
+                    }
+                ],
+                fill: {
+                    opacity: [0.2, 1],
+                    gradient: {
+                        inverseColors: false,
+                        shade: 'light',
+                        type: "vertical",
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100, 100, 100]
+                    }
+                },
+                legend: {
+                    show: false
+                },
+                markers: {
+                    size: 0,
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+                xaxis: {
+                    categories: bulanTahun
+                },
+                yaxis: {
+                    labels: {
+                        show: true
+                    }
+                },
+                tooltip: {
+                    y: [{
+                            title: {
+                                formatter: val => val + " (Rp)"
+                            }
+                        },
+                        {
+                            title: {
+                                formatter: val => val + " (Rp)"
+                            }
+                        }
+                    ]
+                },
+                grid: {
+                    borderColor: '#f1f1f1'
+                }
+            };
+
+            const chartKeuanganInstance = new ApexCharts(document.querySelector("#chart_keuangan"), chartKeuangan);
+            chartKeuanganInstance.render();
+        });
+    </script>
 @endsection

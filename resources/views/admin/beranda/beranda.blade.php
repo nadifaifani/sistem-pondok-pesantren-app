@@ -102,8 +102,9 @@
                             </div>
                             <span class="float-right line-height-6">Pemasukan Pondok</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
+                                <h2 class="mb-5"><span
+                                        class="">{{ 'Rp. ' . number_format($totalpemasukan, 0, ',', '.') }}</span>
+                                </h2>
                             </div>
                         </div>
                     </div>
@@ -115,8 +116,9 @@
                             </div>
                             <span class="float-right line-height-6">Total Pengeluaran</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
+                                <h2 class="mb-5"><span
+                                        class="">{{ 'Rp. ' . number_format($totalpengeluaran, 0, ',', '.') }}</span>
+                                </h2>
                             </div>
                         </div>
                     </div>
@@ -128,8 +130,9 @@
                             </div>
                             <span class="float-right line-height-6">Total Keuangan</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="">Rp.
-                                        2000</span></h2>
+                                <h2 class="mb-5"><span
+                                        class="">{{ 'Rp. ' . number_format($totalpengeluaran, 0, ',', '.') }}</span>
+                                </h2>
                             </div>
                         </div>
                     </div>
@@ -141,7 +144,7 @@
                             </div>
                             <span class="float-right line-height-6">Total Santri</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="me-2">2000</span><span> santri</span>
+                                <h2 class="mb-5"><span class="me-2">{{ $totalsantri }}</span><span> santri</span>
                                 </h2>
                             </div>
                         </div>
@@ -178,4 +181,180 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    {{-- Chart Keuangan --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data from PHP
+            const chartData = @json($chartDataKeuangan);
+
+            // Extract data for chart
+            const pemasukan = chartData.map(item => item.total_pemasukan);
+            const pengeluaran = chartData.map(item => item.total_pengeluaran);
+            const bulanTahun = chartData.map(item => {
+                const namaBulan = new Date(item.tahun, item.bulan - 1, 1).toLocaleDateString('id-ID', {
+                    month: 'long'
+                });
+                return `${namaBulan} ${item.tahun}`;
+            });
+
+            // Configure and render chart
+            const chartKeuangan = {
+                chart: {
+                    height: 407,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: [2, 3],
+                    curve: 'smooth',
+                    dashArray: [0, 5]
+                },
+                colors: ['#00ca00', '#007bff'],
+                series: [{
+                        name: "Pemasukan",
+                        type: 'area',
+                        data: pemasukan
+                    },
+                    {
+                        name: "Pengeluaran",
+                        type: 'line',
+                        data: pengeluaran
+                    }
+                ],
+                fill: {
+                    opacity: [0.2, 1],
+                    gradient: {
+                        inverseColors: false,
+                        shade: 'light',
+                        type: "vertical",
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100, 100, 100]
+                    }
+                },
+                legend: {
+                    show: false
+                },
+                markers: {
+                    size: 0,
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+                xaxis: {
+                    categories: bulanTahun
+                },
+                yaxis: {
+                    labels: {
+                        show: true
+                    }
+                },
+                tooltip: {
+                    y: [{
+                            title: {
+                                formatter: val => val + " (Rp)"
+                            }
+                        },
+                        {
+                            title: {
+                                formatter: val => val + " (Rp)"
+                            }
+                        }
+                    ]
+                },
+                grid: {
+                    borderColor: '#f1f1f1'
+                }
+            };
+
+            const chartKeuanganInstance = new ApexCharts(document.querySelector("#chart_keuangan"), chartKeuangan);
+            chartKeuanganInstance.render();
+        });
+    </script>
+
+    {{-- Chart santri --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data from PHP
+            const chartData = @json($chartDataKeuangan);
+
+            // Extract data for chart
+            const pemasukan = chartData.map(item => item.total_pemasukan);
+            const pengeluaran = chartData.map(item => item.total_pengeluaran);
+            const bulanTahun = chartData.map(item => {
+                const namaBulan = new Date(item.tahun, item.bulan - 1, 1).toLocaleDateString('id-ID', {
+                    month: 'long'
+                });
+                return `${namaBulan} ${item.tahun}`;
+            });
+
+            // Data yang diterima dari controller
+            const totalMaleSantri = @json($totalMaleSantri);
+            const totalFemaleSantri = @json($totalFemaleSantri);
+
+            // Konfigurasi chart
+            const chartSantri = {
+                chart: {
+                    height: 400,
+                    type: 'bar',
+                    sparkline: {
+                        show: false
+                    },
+                    toolbar: {
+                        show: false
+                    },
+                },
+                colors: ['#0084ff', '#FF4CEA'],
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '30%',
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: false,
+                    width: 5,
+                    colors: ['#ffffff'],
+                },
+                series: [{
+                    name: 'Laki-laki',
+                    data: [totalMaleSantri]
+                }, {
+                    name: 'Perempuan',
+                    data: [totalFemaleSantri]
+                }],
+                fill: {
+                    opacity: 1
+                },
+                xaxis: {
+                    categories: ['Jumlah Santri']
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return val + " Santri";
+                        }
+                    }
+                }
+            };
+
+            // Render chart
+            const chartSantriInstance = new ApexCharts(document.querySelector("#chart_santri"),
+                chartSantri);
+            chartSantriInstance.render();
+        });
+    </script>
 @endsection
