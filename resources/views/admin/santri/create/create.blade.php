@@ -143,7 +143,7 @@
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="tempat_tanggal_lahir_santri"
                                     name="tempat_tanggal_lahir_santri" value="{{ old('tempat_tanggal_lahir_santri') }}"
-                                    required>
+                                    placeholder="contoh. Madiun, 3 Juni 2001" required>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -234,7 +234,7 @@
                                             }
                                         @endphp
                                         <label for="password_wali_santri">Password Wali Santri<span
-                                                class="text-danger">*</span></label>
+                                                class="text-danger">*</span><span class="text-muted ml-2">(Token harap disimpan!)</span></label>
                                         <input type="text" class="form-control text-dark" id="password_wali_santri"
                                             name="password_wali_santri" value="{{ generatePassword() }}" required>
                                     </div>

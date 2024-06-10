@@ -51,6 +51,9 @@
                                 <i class="ri-home-4-line"></i><span>Beranda</span>
                             </a>
                         </li>
+                        <li class="iq-menu-title">
+                            <i class="ri-separator"></i><span>Keuangan</span>
+                        </li>
                         <li class="@if (request()->routeIs('daftar_ulang') || request()->routeIs('iuran_bulanan') || request()->routeIs('tamrin')) active @endif">
                             <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
                                 aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
@@ -80,15 +83,30 @@
                                     class="ri-calendar-2-line"></i><span>Laporan Keuangan</span>
                             </a>
                         </li>
+                        <li class="iq-menu-title">
+                            <i class="ri-separator"></i><span>Santri</span>
+                        </li>
+                        <li class="@if (request()->routeIs('pendaftaran')) active @endif">
+                            <a href="{{ route('pendaftaran') }}" class="iq-waves-effect"><i
+                                    class="ri-pages-line"></i><span>Pendaftaran Baru</span>
+                            </a>
+                        </li>
                         <li class="@if (request()->routeIs('santri')) active @endif">
                             <a href="{{ route('santri') }}" class="iq-waves-effect"><i
                                     class="ri-user-line"></i><span>Santri</span>
                             </a>
                         </li>
-                        <li class="@if (request()->routeIs('pendaftaran')) active @endif">
-                            <a href="{{ route('pendaftaran') }}" class="iq-waves-effect"><i
-                                    class="ri-pages-line"></i><span>Pendaftaran</span>
+                        <li class="">
+                            <a href="#progres" class="iq-waves-effect collapsed" data-toggle="collapse"
+                                aria-expanded="false"><i class="ri-pages-line"></i><span>Penilaian Santri</span>
+                                <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
+                            <ul id="progres" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class=""><a href="">Mata Pelajaran</a></li>
+                                <li class=""><a href="">Hafalan Al-Qur'an</a></li>
+                                <li class=""><a href="">Point Pelanggaran</a>
+                                </li>
+                            </ul>
                         </li>
                         {{-- Tambahan Menu --}}
                         <li class="iq-menu-title">
