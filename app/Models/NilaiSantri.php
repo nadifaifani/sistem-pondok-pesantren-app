@@ -12,13 +12,16 @@ class NilaiSantri extends Model
     protected $table = 'nilai_santris';
     protected $primaryKey = 'id_nilai';
     protected $fillable = [
-        'semester',
-        'id_mata_pelajaran',
+        'id_santri',
+        'semester_ajaran',
+        'tahun_ajaran',
+        'mata_peajaran',
+        'nilai',
     ];
 
 
-    public function MataPelajaran()
+    public function santri()
     {
-        return $this->hasOne(MataPelajaran::class, 'id_mata_pelajaran');
+        return $this->belongsTo(Santri::class, 'id_santri','id_santri');
     }
 }

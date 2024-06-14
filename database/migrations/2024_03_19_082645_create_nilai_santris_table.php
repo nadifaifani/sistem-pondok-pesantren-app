@@ -15,14 +15,20 @@ return new class extends Migration
     {
         Schema::create('nilai_santris', function (Blueprint $table) {
             $table->id('id_nilai');
-            $table->unsignedBigInteger('id_santri')->nullable();
-            $table->string('semester');
-            $table->string('fiqih');
-            $table->string('hadist');   
-            $table->string('bahasa_arab');
-            $table->string('nahwu');   
-            $table->string('shorof');
-            $table->string('hafalan');   
+            $table->unsignedBigInteger('id_santri');
+            $table->string('semester_ajaran');
+            $table->string('tahun_ajaran');
+            $table->enum('mata_pelajaran', [
+                'al_quran_tajwid',
+                'bahasa_arab',
+                'fiqh',
+                'hadist',
+                'aqidah',
+                'sirah_nabawiyyah',
+                'tazkiyatun_nafs',
+                'tarikh'
+            ]);
+            $table->integer('nilai');
             $table->timestamps();
 
             $table->foreign('id_santri')->references('id_santri')->on('santris');

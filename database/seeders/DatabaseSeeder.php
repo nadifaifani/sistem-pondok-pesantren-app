@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
         Pemasukan::factory(10)->create();
         Pengeluaran::factory(10)->create();
         
-        $this->call(PembayaranSeeder::class);
+        $this->call([
+            PembayaranSeeder::class,
+            NilaiSantriSeeder::class,
+        ]);
     }
 }

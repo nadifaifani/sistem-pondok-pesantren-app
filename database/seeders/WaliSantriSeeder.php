@@ -23,7 +23,7 @@ class WaliSantriSeeder extends Seeder
             'role' => 'wali',
             'no_hp' => '089123456789',
             'alamat_wali_santri' => 'Jl. Example',
-            'id_santri' => 1,
+            'id_santri' => null,
         ]);
     }
 }
