@@ -70,7 +70,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_santri') || request()->routeIs('daftar_mata_pelajaranendif')) active @endif" >
+                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_santri') || request()->routeIs('daftar_mata_pelajaran')) active @endif" >
                             <a href="#informasi" class="iq-waves-effect collapsed" data-toggle="collapse" 
                                 aria-expanded="false"><i class="ri-list-check"></i><span>Informasi</span>
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>

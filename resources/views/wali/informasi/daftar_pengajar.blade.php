@@ -93,8 +93,8 @@
 @section('content')
    <!-- Page Content  -->
    <div id="content-page" class="content-page">
-        <!-- Alert -->
-        <div class="container-fluid">
+
+    <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
@@ -111,11 +111,20 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nama Pengajar</th>
-                                        <th>Status Pengajar</th>
+                                        <th>Nomor HP Pengajar</th>
+                                        <th>Mata Pelajaran</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($pengajars as $pengajar)
+                                        <tr>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td>{{ $pengajar->nama_pengajar }}</td>
+                                            <td>{{ $pengajar->nomor_hp_pengajar }}</td>
+                                            <td>{{ ucwords(str_replace('_', ' ', $pengajar->mata_pelajaran)) }}</td>
+                                        </tr>
+                                    @endforeach
                                     <!-- Tambahkan data pengajar di sini -->
                                 </tbody>
                             </table>

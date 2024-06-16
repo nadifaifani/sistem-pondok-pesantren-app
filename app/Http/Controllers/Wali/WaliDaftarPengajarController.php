@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Wali;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pengajar;
 use Illuminate\Http\Request;
 
 class WaliDaftarPengajarController extends Controller
@@ -11,8 +12,10 @@ class WaliDaftarPengajarController extends Controller
     {
         $data['title'] = 'Daftar Pengajar';
 
-        return view('wali.informasi.daftar_pengajar', [
+        $pengajars = Pengajar::all();
 
+        return view('wali.informasi.daftar_pengajar', [
+            'pengajars' => $pengajars,
         ], $data);
     }
 }
