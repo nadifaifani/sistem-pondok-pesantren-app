@@ -17,3 +17,7 @@ yarn-error.log
 /public/berkas_santri/kk_santri/*
 /public/berkas_santri/ktp_santri/*
 /public/berkas_santri/pas_foto_santri/*
+/public/berkas_pendaftar/akta_pendaftar/*
+/public/berkas_pendaftar/kk_pendaftar/*
+/public/berkas_pendaftar/ktp_pendaftar/*
+/public/berkas_pendaftar/pas_foto_pendaftar/*
