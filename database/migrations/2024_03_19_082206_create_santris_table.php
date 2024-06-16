@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tempat_tanggal_lahir_santri');
             $table->string('no_hp_santri');
             $table->string('email_santri')->unique();
-            $table->string('jenis_kelamin_santri'); 
+            $table->enum('jenis_kelamin_santri', ['laki-laki', 'perempuan']); 
             $table->string('status_santri');
             $table->string('alamat_santri');  
             $table->string('ktp_santri');

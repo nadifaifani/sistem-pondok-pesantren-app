@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id('id_pendaftar');
+            $table->string('kode_pendaftaran');
             $table->string('nama_pendaftar');
             $table->string('tempat_tanggal_lahir_pendaftar');
-            $table->string('jenis_kelamin_pendaftar'); 
+            $table->enum('jenis_kelamin_pendaftar', ['laki-laki', 'perempuan']); 
             $table->string('alamat_pendaftar');  
             $table->string('no_hp_pendaftar');
             $table->string('email_pendaftar')->unique();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->string('no_hp_wali_pendaftar');
             $table->string('email_wali_pendaftar')->unique();
             $table->string('alamat_wali_santri');
+            $table->enum('status',['sudah_verifikasi', 'belum_verifikasi'])->default('belum_verifikasi');
             $table->timestamps();
         });
     }

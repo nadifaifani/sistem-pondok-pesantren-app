@@ -36,6 +36,8 @@ Route::middleware(['guest:web,wali_santri'])->group(function () {
   Route::get('/', [GuestBerandaController::class, 'index'])->name('login');
   Route::post('/login', [GuestBerandaController::class, 'login']);
   Route::get('/pendaftaran-santri-baru', [GuestPendaftaranController::class, 'index']);
+  Route::post('/pendaftaran-santri-baru', [GuestPendaftaranController::class, 'create']);
+  Route::get('/pendaftaran-santri-baru/konfirmasi/{id}', [GuestPendaftaranController::class, 'index_konfirmasi'])->name('guest.pendaftaran.konfirmasi');
 });
 
 Route::middleware(['auth:web'])->group(function () {
@@ -66,6 +68,8 @@ Route::middleware(['auth:web'])->group(function () {
   Route::put('/admin/santri/edit/{id}/action', [AdminSantriController::class, 'edit']);
   Route::delete('/admin/santri/delete/{id}', [AdminSantriController::class, 'delete']);
   Route::get('/admin/pendaftaran', [AdminPendaftaranController::class, 'index'])->name('pendaftaran');
+  Route::get('/admin/pendaftaran/{id}', [AdminPendaftaranController::class, 'index_info']);
+  Route::post('/admin/pendaftaran/verifikasi/{id}', [AdminPendaftaranController::class, 'create']);
   Route::get('/admin/master', [AdminMasterController::class, 'index'])->name('master');
 });
 

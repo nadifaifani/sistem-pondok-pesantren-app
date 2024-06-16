@@ -148,7 +148,7 @@ class AdminSantriController extends Controller
                 'id_santri' => $santri->id_santri,
                 'id_admin' => null,
                 'tanggal_pembayaran' => null,
-                'jumlah_pembayaran' => 50000,
+                'jumlah_pembayaran' => 300000,
                 'jenis_pembayaran' => 'daftar_ulang',
                 'status_pembayaran' => 'belum_lunas',
                 'tahun_ajaran' => $currentSemester['tahun'],
