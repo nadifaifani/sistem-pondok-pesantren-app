@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             WaliSantriSeeder::class,
+            PendaftaranSeeder::class,
         ]);
 
         Santri::factory(20)->create();
