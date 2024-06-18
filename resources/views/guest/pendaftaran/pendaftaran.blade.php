@@ -23,17 +23,60 @@
             border: none;
             background-color: #e9edf4;
             padding: 10px;
-            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
         }
 
         .form-control:focus {
             border: none;
             background-color: #e5f2ff;
-            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
         }
 
         .form-label {
             font-weight: bold;
+        }
+
+        /* CSS untuk merapikan input file */
+        .custom-file-input {
+            display: inline-block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: transparent; /* Ubah background color menjadi transparan */
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .custom-file-input:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .custom-file-input::file-selector-button {
+            padding: 0.375rem 0.75rem;
+            margin-right: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            background-color: #e9edf4; /* Ganti warna background sesuai keinginan */
+            color: #495057; /* Warna teks putih */
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .custom-file-input::file-selector-button:hover {
+            background-color: #0056b3; /* Ganti warna hover sesuai keinginan */
+        }
+
+        .form-control-file {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control-file input[type="file"] {
+            flex: 1;
         }
     </style>
     <div class="container">
@@ -182,13 +225,13 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="ktp_pendaftar">KTP <span class="text-danger">*</span></label>
-                                        <input type="file" class="form-control" id="ktp_pendaftar"
+                                        <input type="file" class="form-control custom-file-input" id="ktp_pendaftar"
                                             name="ktp_pendaftar" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="kk_pendaftar">Kartu Keluarga <span
                                                 class="text-danger">*</span></label>
-                                        <input type="file" class="form-control" id="kk_pendaftar" name="kk_pendaftar"
+                                        <input type="file" class="form-control custom-file-input" id="kk_pendaftar" name="kk_pendaftar"
                                             required>
                                     </div>
                                 </div>
@@ -196,12 +239,12 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="akta_kelahiran_pendaftar">Akta Kelahiran <span
                                                 class="text-danger">*</span></label>
-                                        <input type="file" class="form-control" id="akta_kelahiran_pendaftar"
+                                        <input type="file" class="form-control custom-file-input" id="akta_kelahiran_pendaftar"
                                             name="akta_kelahiran_pendaftar" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="pasfoto_pendaftar">Pas Foto <span class="text-danger">*</span></label>
-                                        <input type="file" class="form-control" id="pasfoto_pendaftar"
+                                        <input type="file" class="form-control custom-file-input" id="pasfoto_pendaftar"
                                             name="pasfoto_pendaftar" required>
                                     </div>
                                 </div>

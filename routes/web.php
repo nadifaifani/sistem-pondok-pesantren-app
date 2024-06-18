@@ -1,27 +1,29 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminBerandaController;
-use App\Http\Controllers\Admin\AdminDaftarUlangController;
-use App\Http\Controllers\Admin\AdminIuranBulananController;
-use App\Http\Controllers\Admin\AdminLaporanKeuanganController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Wali\WaliBerandaController;
+use App\Http\Controllers\Wali\WaliTagihanController;
 use App\Http\Controllers\Admin\AdminMasterController;
-use App\Http\Controllers\Admin\AdminPemasukanController;
-use App\Http\Controllers\Admin\AdminPendaftaranController;
-use App\Http\Controllers\Admin\AdminPengeluaranController;
 use App\Http\Controllers\Admin\AdminSantriController;
 use App\Http\Controllers\Admin\AdminTamrinController;
-use App\Http\Controllers\Guest\GuestBerandaController;
-use App\Http\Controllers\Guest\GuestPendaftaranController;
-use App\Http\Controllers\Wali\WaliBerandaController;
-use App\Http\Controllers\Wali\WaliCekHafalanController;
 use App\Http\Controllers\Wali\WaliCekNilaiController;
 use App\Http\Controllers\Wali\WaliCekPointController;
-use App\Http\Controllers\Wali\WaliDaftarMataPelajaranController;
-use App\Http\Controllers\Wali\WaliDaftarPengajarController;
+use App\Http\Controllers\Admin\AdminBerandaController;
+use App\Http\Controllers\Admin\AdminHafalanController;
+use App\Http\Controllers\Guest\GuestBerandaController;
+use App\Http\Controllers\Wali\WaliCekHafalanController;
+use App\Http\Controllers\Admin\AdminPemasukanController;
 use App\Http\Controllers\Wali\WaliDaftarSantriController;
-use App\Http\Controllers\Wali\WaliTagihanController;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AdminDaftarUlangController;
+use App\Http\Controllers\Admin\AdminPendaftaranController;
+use App\Http\Controllers\Admin\AdminPengeluaranController;
+use App\Http\Controllers\Guest\GuestPendaftaranController;
+use App\Http\Controllers\Admin\AdminIuranBulananController;
+use App\Http\Controllers\Wali\WaliDaftarPengajarController;
+use App\Http\Controllers\Admin\AdminMataPelajaranController;
+use App\Http\Controllers\Admin\AdminLaporanKeuanganController;
+use App\Http\Controllers\Wali\WaliDaftarMataPelajaranController;
+use App\Http\Controllers\Admin\AdminPointPelanggaranController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +69,24 @@ Route::middleware(['auth:web'])->group(function () {
   Route::get('/admin/santri/edit/{id}', [AdminSantriController::class, 'index_edit']);
   Route::put('/admin/santri/edit/{id}/action', [AdminSantriController::class, 'edit']);
   Route::delete('/admin/santri/delete/{id}', [AdminSantriController::class, 'delete']);
+  Route::get('/admin/mata_pelajaran', [AdminMataPelajaranController::class, 'index'])->name('mata_pelajaran');
+  Route::get('/admin/mata_pelajaran/create', [AdminMataPelajaranController::class, 'create'])->name('mata_pelajaran.create');
+  Route::post('/admin/mata_pelajaran/create/action', [AdminMataPelajaranController::class, 'store']);
+  Route::get('/admin/mata_pelajaran/edit/{id}', [AdminMataPelajaranController::class, 'edit'])->name('mata_pelajaran.edit');
+  Route::put('/admin/mata_pelajaran/edit/{id}/action', [AdminMataPelajaranController::class, 'update']);
+  Route::delete('/admin/mata_pelajaran/delete/{id}', [AdminMataPelajaranController::class, 'destroy']);
+  Route::get('/admin/hafalan', [AdminHafalanController::class, 'index'])->name('hafalan');
+  Route::get('/admin/hafalan/create', [AdminHafalanController::class, 'create'])->name('hafalan.create');
+  Route::post('/admin/hafalan/create/action', [AdminHafalanController::class, 'store']);
+  Route::get('/admin/hafalan/edit/{id}', [AdminHafalanController::class, 'edit'])->name('hafalan.edit');
+  Route::put('/admin/hafalan/edit/{id}/action', [AdminHafalanController::class, 'update']);
+  Route::delete('/admin/hafalan/delete/{id}', [AdminHafalanController::class, 'destroy']);
+  Route::get('/admin/point_pelanggaran', [AdminPointPelanggaranController::class, 'index'])->name('point_pelanggaran');
+  Route::get('/admin/poit_pelanggaran/create', [AdminPointPelanggaranController::class, 'create'])->name('point_pelanggaran.create');
+  Route::post('/admin/point_pelanggaran/create/action', [AdminPointPelanggaranController::class, 'store']);
+  Route::get('/admin/point_pelanggaran/edit/{id}', [AdminPointPelanggaranController::class, 'edit'])->name('point_pelanggaran.edit');
+  Route::put('/admin/point_pelanggaran/edit/{id}/action', [AdminPointPelanggaranController::class, 'update']);
+  Route::delete('/admin/point_pelanggaran/delete/{id}', [AdminPointPelanggaranController::class, 'destroy']);
   Route::get('/admin/pendaftaran', [AdminPendaftaranController::class, 'index'])->name('pendaftaran');
   Route::get('/admin/pendaftaran/{id}', [AdminPendaftaranController::class, 'index_info']);
   Route::post('/admin/pendaftaran/verifikasi/{id}', [AdminPendaftaranController::class, 'create']);

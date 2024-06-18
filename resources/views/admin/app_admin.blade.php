@@ -102,9 +102,12 @@
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
                             <ul id="progres" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class=""><a href="">Mata Pelajaran</a></li>
-                                <li class=""><a href="">Hafalan Al-Qur'an</a></li>
-                                <li class=""><a href="">Point Pelanggaran</a>
+                                <li class="@if (request()->routeIs('mata_pelajaran')) active @endif"><a
+                                    href="{{ route('mata_pelajaran') }}">Mata Pelajaran</a></li>
+                            <li class="@if (request()->routeIs('hafalan')) active @endif"><a
+                                    href="{{ route('hafalan') }}">Hafalan Al-Qur'an</a></li>
+                            <li class="@if (request()->routeIs('point_pelanggaran')) active @endif"><a
+                                    href="{{ route('point_pelanggaran') }}">Point Pelanggaran</a></li>
                                 </li>
                             </ul>
                         </li>
