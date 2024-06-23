@@ -29,6 +29,12 @@ class AdminBerandaController extends Controller
         //*total santri
         $totalsantri = Santri::count();
 
+        //* Buat keterangan berdasarkan data yang dihasilkan
+        $keteranganPemasukan = "Pemasukan pondok bulan ini telah mencapai target bulanan.";
+        $keteranganPengeluaran = "Pengeluaran bulan ini lebih rendah dari bulan sebelumnya.";
+        $keteranganKeuangan = "Keuangan total stabil dengan pemasukan dan pengeluaran seimbang.";
+        $keteranganSantri = "Jumlah santri stabil tanpa ada penurunan.";
+
         //* chart keuangan
         $chartDataPemasukan = Pembayaran::where('status_pembayaran', 'lunas')
             ->select(
@@ -88,6 +94,10 @@ class AdminBerandaController extends Controller
             'chartDataKeuangan' => $mergedData,
             'totalMaleSantri' => $totalMaleSantri,
             'totalFemaleSantri' => $totalFemaleSantri,
+            'keteranganPemasukan' => $keteranganPemasukan,
+            'keteranganPengeluaran' => $keteranganPengeluaran,
+            'keteranganKeuangan' => $keteranganKeuangan,
+            'keteranganSantri' => $keteranganSantri,
         ], $data);
         
     }

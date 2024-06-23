@@ -105,7 +105,7 @@
                                 <h2 class="mb-5"><span
                                         class="">{{ 'Rp. ' . number_format($totalpemasukan, 0, ',', '.') }}</span>
                                 </h2>
-                                <p class="text-muted">Pemasukan pondok bulan ini telah mencapai target bulanan.</p>
+                                <p class="custom-text-color">{{ $keteranganPemasukan }}</p>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                                 <h2 class="mb-5"><span
                                         class="">{{ 'Rp. ' . number_format($totalpengeluaran, 0, ',', '.') }}</span>
                                 </h2>
-                                <p class="text-muted">Pengeluaran bulan ini lebih rendah dari bulan sebelumnya.</p>
+                                <p class="custom-text-color">{{ $keteranganPengeluaran }}</p>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                                 <h2 class="mb-5"><span
                                         class="">{{ 'Rp. ' . number_format($totalpengeluaran, 0, ',', '.') }}</span>
                                 </h2>
-                                <p class="text-muted">Keuangan total stabil dengan pemasukan dan pengeluaran seimbang.</p>
+                                <p class="custom-text-color">{{ $keteranganKeuangan }}</p>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                             <div class="text-center mt-3">
                                 <h2 class="mb-5"><span class="me-2">{{ $totalsantri }}</span><span> santri</span>
                                 </h2>
-                                <p class="text-muted">Jumlah santri stabil tanpa ada penurunan.</p>
+                                <p class="custom-text-color">{{ $keteranganSantri }}</p>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
                                 <h5 class="card-title">Pemasukan dan Pengeluaran Pondok</h5>
-                                <p class="text-muted mt-2">Grafik menunjukkan tren peningkatan pemasukan dan pengeluaran selama tiga bulan terakhir.</p>
+                                <p class="text-muted mt-2">Grafik menunjukkan peningkatan pemasukan dan pengeluaran perbulan.</p>
                             </div>
                         </div>
                         <div class="iq-card-body">

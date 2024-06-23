@@ -101,7 +101,7 @@
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    <img src="{{ asset('images/pondok/qurban.jpeg') }}" class="card-img"
+                                    <img src="{{ asset('images/pondok/IdulAdha.jpg') }}" class="card-img"
                                         alt="Gambar Qurban">
                                 </div>
                                 <div class="col-md-8">
@@ -111,7 +111,7 @@
                                             Adha 2024</p>
                                         <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan
                                             tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
-                                        <p class="card-text">TU Putri, Ustadz. Abdul – 081206583614</p>
+                                        <p class="card-text">TU Putra, Ustadz. Abdul – 081206583614</p>
                                         <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p <p class="card-text">
                                         <small class="text-muted">Last updated 3 mins ago</small></p>
                                     </div>

@@ -100,10 +100,8 @@
                         </div>
                         <div class="col-lg-7">
                             <ul>
-                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. </li>
-                                <li>Dolorem necessitatibus rerum tempora minus nemo repudiandae.</li>
-                                <li>Saepe aliquid, a nam reprehenderit dolore ab cum. Placeat aut magni tempora neque, odit
-                                    impedit!
+                                <li>Membangun generasi yang beriman, bertakwa, berilmu, dan berakhlakul karimah melalui pendidikan yang komprehensif dan terpadu, 
+                                    serta menjadikan Pondok Pesantren Al Huda sebagai pusat unggulan dalam pengembangan ilmu agama dan ilmu pengetahuan.
                                 </li>
                             </ul>
                         </div>
@@ -118,11 +116,12 @@
                         </div>
                         <div class="col-lg-7">
                             <ul>
-                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. </li>
-                                <li>Dolorem necessitatibus rerum tempora minus nemo repudiandae.</li>
-                                <li>Saepe aliquid, a nam reprehenderit dolore ab cum. Placeat aut magni tempora neque, odit
-                                    impedit!
-                                </li>
+                                <li>Meningkatkan Kualitas Pendidikan Agama</li>
+                                <li>Membina Akhlakul Karimah</li>
+                                <li>Mengembangkan Potensi Diri Santri</li>
+                                <li>Membangun Lingkungan yang Islami</li>
+                                <li>Mendorong Kepedulian Sosial dan Dakwah</li>
+                                <li>Memperkuat Hubungan dengan Masyarakat</li>
                             </ul>
                         </div>
                     </div>

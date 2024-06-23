@@ -106,7 +106,7 @@
                         </div>
                         <div class="iq-card-body">
                             <div class="pdf-viewer mb-4">
-                                <iframe src="{{ asset('assets/local/point.pdf') }}" width="100%" height="500px">
+                                <iframe src="{{ asset('assets/local/point_santri.pdf') }}" width="100%" height="500px">
                                 </iframe>
                             </div>
                         </div>
