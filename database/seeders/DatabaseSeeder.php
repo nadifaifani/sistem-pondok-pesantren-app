@@ -28,13 +28,13 @@ class DatabaseSeeder extends Seeder
             PendaftaranSeeder::class,
         ]);
 
-        Santri::factory(20)->create();
-        WaliSantri::factory(20)->create();
+        Santri::factory(2)->create();
+        WaliSantri::factory(2)->create();
         Pemasukan::factory(10)->create();
         Pengeluaran::factory(10)->create();
         
         $this->call([
-            PembayaranSeeder::class,
+            // PembayaranSeeder::class,
             NilaiSantriSeeder::class,
             PengajarSeeder::class,
         ]);
