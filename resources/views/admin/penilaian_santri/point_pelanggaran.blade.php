@@ -12,7 +12,7 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Hafalan Al-Qur'an</h5>
+                <h5 class="mb-0">Point Pelanggaran</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>
@@ -92,6 +92,140 @@
 @endsection
 @section('content')
     <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+        <!-- Alert -->
+        <div class="container-fluid">
+            @if (session('success'))
+                <div id="success-alert" class="alert text-white bg-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-checkbox-circle-line"></i>
+                    </div>
+                    <div class="iq-alert-text"><b>Berhasil !</b> {{ session('success') }}</div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $err)
+                    <div id="error-alert" class="alert text-white bg-danger" role="alert">
+                        <div class="iq-alert-icon">
+                            <i class="ri-information-line"></i>
+                        </div>
+                        <div class="iq-alert-text"><b>Gagal ! </b> {{ $err }}</div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+        {{-- Tabel --}}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Data Nilai Mata Pelajaran Santri</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div class="table-responsive pb-3 pt-3 px-3">
+                                <table id="tableSantri" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nama Santri</th>
+                                            <th>Tahun Masuk</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#tableSantri').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('mata_pelajaran') }}",
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'nama_santri',
+                        name: 'nama_santri'
+                    },
+                    {
+                        data: 'tahun_masuk',
+                        name: 'tahun_masuk'
+                    },
+                    {
+                        data: 'jenis_kelamin_santri',
+                        name: 'jenis_kelamin_santri',
+                        render: function(data, type, full, meta) {
+                            switch (full.jenis_kelamin_santri) {
+                                case 'laki-laki':
+                                    return '<p>Laki - laki</p>';
+                                default:
+                                    return '<p>Perempuan</p>';
+                            }
+                        }
+                    },
+                    {
+                        data: 'status_santri',
+                        name: 'status_santri',
+                        render: function(data, type, full, meta) {
+                            if (data === 'pulang') {
+                                return '<span class="badge badge-pill badge-primary">Pulang</span>';
+                            } else {
+                                return '<span class="badge badge-pill badge-success">Menetap</span>';
+                            }
+                        }
+                    },
+                    {
+                        data: 'id_santri',
+                        name: 'id_santri',
+                        render: function(data, type, full, meta) {
+                            return '<td class="text-center">' +
+                                '<div class="d-flex align-items-center">' +
+                                // Info button
+                                '<a data-placement="top" title="Info" href="/admin/point_pelanggaran/' +
+                                full.id_santri + '" style="font-size: 15px;">' +
+                                '<span class="badge badge-primary"><i class="ri-information-line"></i> Cek Point</span>' +
+                                '</a>' +
+                                '</div>' +
+                                '</td>';
+                        }
+                    },
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
 
-
+        });
+    </script>
 @endsection

@@ -214,7 +214,7 @@
                                 '<div class="d-flex align-items-center">' +
                                 // Info button
                                 '<a data-placement="top" title="Info" href="/admin/pendaftaran/' +
-                                full.id_pendaftar + '">' +
+                                full.id_pendaftar + '" style="font-size: 15px;">' +
                                 '<span class="badge badge-primary"><i class="ri-check-line"></i> Verifikasi Data</span>' +
                                 '</a>' +
                                 '</div>' +

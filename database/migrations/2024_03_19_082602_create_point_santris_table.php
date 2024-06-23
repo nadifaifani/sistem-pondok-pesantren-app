@@ -16,8 +16,15 @@ return new class extends Migration
         Schema::create('point_santris', function (Blueprint $table) {
             $table->id('id_point_santri');
             $table->unsignedBigInteger('id_santri')->nullable();
-            $table->string('jenis_pont_santri');
-            $table->string('jumlah_point_santri');
+            $table->dateTime('tanggal_point_santri');
+            $table->enum('jenis_point_santri',[
+                'A',
+                'B',
+                'C',
+                'D',
+                'E'
+            ]);
+            $table->integer('jumlah_point_santri');
             $table->string('deskripsi_point_santri');
             $table->timestamps();
 

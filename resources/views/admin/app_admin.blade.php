@@ -96,7 +96,7 @@
                                     class="ri-user-line"></i><span>Santri</span>
                             </a>
                         </li>
-                        <li class="">
+                        <li class="@if (request()->routeIs('mata_pelajaran') || request()->routeIs('hafalan') || request()->routeIs('point_pelanggaran')) active @endif">
                             <a href="#progres" class="iq-waves-effect collapsed" data-toggle="collapse"
                                 aria-expanded="false"><i class="ri-pages-line"></i><span>Penilaian Santri</span>
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
@@ -116,16 +116,16 @@
                             <i class="ri-separator"></i><span>Master</span>
                         </li>
                         <li class="@if (request()->routeIs('master_admin')) active @endif">
-                            <a href="{{ 'master_admin' }}" class="iq-waves-effect"><i
+                            <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
                                     class="ri-profile-line"></i><span>Master
                                     Admin</span>
                             </a>
                         </li>
-                        <li class="@if (request()->routeIs('master_guest')) active @endif">
+                        {{-- <li class="@if (request()->routeIs('master_guest')) active @endif">
                             <a href="" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master
                                     Guest</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </nav>
                 <div class="p-3"></div>

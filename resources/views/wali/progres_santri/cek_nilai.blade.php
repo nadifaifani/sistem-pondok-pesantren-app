@@ -118,7 +118,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($groupedNilaiSantri as $group => $nilaiSantri)
+                                        @forelse ($groupedNilaiSantri as $group => $nilaiSantri)
                                             @php
                                                 [$tahun, $semester] = explode('-', $group);
                                                 $rata_rata = $nilaiSantri->avg('nilai');
@@ -134,7 +134,11 @@
                                                 <td class="text-center"><span class="badge badge-success">Cetak
                                                         Rapot</span></td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr class="text-center">
+                                                <td colspan="6">Tidak ada data</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

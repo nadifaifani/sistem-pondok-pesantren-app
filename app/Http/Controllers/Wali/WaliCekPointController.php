@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Wali;
 
-use App\Http\Controllers\Controller;
+use App\Models\Santri;
+use App\Models\PointSantri;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class WaliCekPointController extends Controller
 {
@@ -11,8 +14,17 @@ class WaliCekPointController extends Controller
     {
         $data['title'] = 'Cek Point';
 
-        return view('wali.progres_santri.cek_point', [
+        $id_santri = Auth::user()->id_santri;
 
+        $santri = Santri::where('id_santri', $id_santri)->first();
+
+        $point_santris = PointSantri::where('id_santri', $id_santri)
+            ->orderBy('tanggal_point_santri', 'desc')
+            ->get();
+
+        return view('wali.progres_santri.cek_point', [
+            'santri' => $santri,
+            'point_santris' => $point_santris
         ], $data);
     }
 }

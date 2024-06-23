@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\AdminHafalanController;
 use App\Http\Controllers\Guest\GuestBerandaController;
 use App\Http\Controllers\Wali\WaliCekHafalanController;
 use App\Http\Controllers\Admin\AdminPemasukanController;
-use App\Http\Controllers\Wali\WaliDaftarSantriController;
+use App\Http\Controllers\Wali\WaliDataPribadiSantriController;
 use App\Http\Controllers\Admin\AdminDaftarUlangController;
 use App\Http\Controllers\Admin\AdminPendaftaranController;
 use App\Http\Controllers\Admin\AdminPengeluaranController;
@@ -70,11 +70,10 @@ Route::middleware(['auth:web'])->group(function () {
   Route::put('/admin/santri/edit/{id}/action', [AdminSantriController::class, 'edit']);
   Route::delete('/admin/santri/delete/{id}', [AdminSantriController::class, 'delete']);
   Route::get('/admin/mata_pelajaran', [AdminMataPelajaranController::class, 'index'])->name('mata_pelajaran');
-  Route::get('/admin/mata_pelajaran/create', [AdminMataPelajaranController::class, 'create'])->name('mata_pelajaran.create');
-  Route::post('/admin/mata_pelajaran/create/action', [AdminMataPelajaranController::class, 'store']);
-  Route::get('/admin/mata_pelajaran/edit/{id}', [AdminMataPelajaranController::class, 'edit'])->name('mata_pelajaran.edit');
-  Route::put('/admin/mata_pelajaran/edit/{id}/action', [AdminMataPelajaranController::class, 'update']);
-  Route::delete('/admin/mata_pelajaran/delete/{id}', [AdminMataPelajaranController::class, 'destroy']);
+  Route::get('/admin/mata_pelajaran/{id}', [AdminMataPelajaranController::class, 'index_nilai']);
+  Route::post('/admin/mata_pelajaran/{id}/create', [AdminMataPelajaranController::class, 'create']);
+  Route::put('/admin/mata_pelajaran/{id}/edit', [AdminMataPelajaranController::class, 'edit']);
+  Route::delete('/admin/mata_pelajaran/{id}/delete', [AdminMataPelajaranController::class, 'delete']);
   Route::get('/admin/hafalan', [AdminHafalanController::class, 'index'])->name('hafalan');
   Route::get('/admin/hafalan/create', [AdminHafalanController::class, 'create'])->name('hafalan.create');
   Route::post('/admin/hafalan/create/action', [AdminHafalanController::class, 'store']);
@@ -82,15 +81,14 @@ Route::middleware(['auth:web'])->group(function () {
   Route::put('/admin/hafalan/edit/{id}/action', [AdminHafalanController::class, 'update']);
   Route::delete('/admin/hafalan/delete/{id}', [AdminHafalanController::class, 'destroy']);
   Route::get('/admin/point_pelanggaran', [AdminPointPelanggaranController::class, 'index'])->name('point_pelanggaran');
-  Route::get('/admin/poit_pelanggaran/create', [AdminPointPelanggaranController::class, 'create'])->name('point_pelanggaran.create');
-  Route::post('/admin/point_pelanggaran/create/action', [AdminPointPelanggaranController::class, 'store']);
-  Route::get('/admin/point_pelanggaran/edit/{id}', [AdminPointPelanggaranController::class, 'edit'])->name('point_pelanggaran.edit');
-  Route::put('/admin/point_pelanggaran/edit/{id}/action', [AdminPointPelanggaranController::class, 'update']);
-  Route::delete('/admin/point_pelanggaran/delete/{id}', [AdminPointPelanggaranController::class, 'destroy']);
+  Route::get('/admin/point_pelanggaran/{id}', [AdminPointPelanggaranController::class, 'index_point']);
+  Route::post('/admin/point_pelanggaran/{id}/create', [AdminPointPelanggaranController::class, 'create']);
+  Route::put('/admin/point_pelanggaran/{id}/edit', [AdminPointPelanggaranController::class, 'edit']);
+  Route::delete('/admin/point_pelanggaran/{id}/delete', [AdminPointPelanggaranController::class, 'delete']);
   Route::get('/admin/pendaftaran', [AdminPendaftaranController::class, 'index'])->name('pendaftaran');
   Route::get('/admin/pendaftaran/{id}', [AdminPendaftaranController::class, 'index_info']);
   Route::post('/admin/pendaftaran/verifikasi/{id}', [AdminPendaftaranController::class, 'create']);
-  Route::get('/admin/master', [AdminMasterController::class, 'index'])->name('master');
+  Route::get('/admin/master_admin', [AdminMasterController::class, 'index'])->name('master_admin');
 });
 
 Route::middleware(['auth:wali_santri'])->group(function () {
@@ -100,8 +98,8 @@ Route::middleware(['auth:wali_santri'])->group(function () {
   Route::get('/wali/cek_hafalan', [WaliCekHafalanController::class, 'index'])->name('cek_hafalan');
   Route::get('/wali/cek_point', [WaliCekPointController::class, 'index'])->name('cek_point');
   Route::get('/wali/daftar_pengajar', [WaliDaftarPengajarController::class, 'index'])->name('daftar_pengajar');
-  Route::get('/wali/daftar_santri', [WaliDaftarSantriController::class, 'index'])->name('daftar_santri');
   Route::get('/wali/daftar_mata_pelajaran', [WaliDaftarMataPelajaranController::class, 'index'])->name('daftar_mata_pelajaran');
+  Route::get('/wali/data_pribadi_santri', [WaliDataPribadiSantriController::class, 'index'])->name('data_pribadi_santri');
 });
 
 Route::post('/logout', [GuestBerandaController::class, 'logout'])->name('logout');
