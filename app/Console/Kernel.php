@@ -21,12 +21,14 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
+    {   
+        // Mengirim setiap bulan januari dan juni
         // Schedule the task to run at the beginning of January and June
         // $schedule->call(function () {
         //     $this->createPembayaranAndSendEmails();
         // })->twiceMonthly(1, 6, '00:00');
 
+        // Test mengirim email
         $schedule->call(function () {
             $this->createPembayaranAndSendEmails();
         })->everyMinute(); 
