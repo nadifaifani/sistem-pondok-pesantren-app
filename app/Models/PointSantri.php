@@ -11,6 +11,7 @@ class PointSantri extends Model
     protected $table = 'point_santris';
     protected $primaryKey = 'id_point_santri';
     protected $fillable = [
+        'tanggal_point_santri',
         'jenis_point_santri',
         'jumlah_point_santri',
         'deskripsi_point_santri',
@@ -20,7 +21,7 @@ class PointSantri extends Model
     
     public function santri()
     {
-        return $this->hasMany(Santri::class, 'id_santri');
+        return $this->belongsToe(Santri::class, 'id_santri');
     }
 
 

@@ -70,17 +70,21 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_santri') || request()->routeIs('daftar_mata_pelajaran')) active @endif" >
+                        <li class="@if (request()->routeIs('daftar_pengajar') || request()->routeIs('daftar_mata_pelajaran')) active @endif" >
                             <a href="#informasi" class="iq-waves-effect collapsed" data-toggle="collapse" 
                                 aria-expanded="false"><i class="ri-list-check"></i><span>Informasi</span>
                                 <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                             </a>
                             <ul id="informasi" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="@if (request()->routeIs('daftar_pengajar')) active @endif"><a href="{{ route('daftar_pengajar') }}">Daftar Pengajar</a></li>
-                                <li class="@if (request()->routeIs('daftar_santri')) active @endif"><a href="{{ route('daftar_santri') }}">Daftar Santri</a></li>
                                 <li class="@if (request()->routeIs('daftar_mata_pelajaran')) active @endif"><a href="{{ route('daftar_mata_pelajaran') }}">Daftar Mata Pelajaran</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="@if (request()->routeIs('data_pribadi_santri')) active @endif">
+                            <a href="{{ route('data_pribadi_santri') }}" class="iq-waves-effect"><i
+                                    class="ri-user-line"></i><span>Data Pribadi Santri</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>

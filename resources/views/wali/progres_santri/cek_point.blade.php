@@ -122,35 +122,70 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
+                            <p>Selamat datang di halaman Cek Nilai Santri Pondok Pesantren Al Huda.</p>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th class="text-center" scope="col">Tahun</th>
+                                            <th class="text-center" scope="col">Tanggal</th>
+                                            <th class="text-center" scope="col">Jenis Pelanggaran</th>
                                             <th class="text-center" scope="col">Point</th>
-                                            <th class="text-center" scope="col">Cetak Point</th>
+                                            <th class="text-center" scope="col">Deskripsi Pelanggaran</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td class="text-center">2023</td>
-                                            <td class="text-center"><span class="badge badge-primary" data-toggle="modal" data-target="#exampleModalScrollable">Cek Point</span></td>
-                                            <td class="text-center"><span class="badge badge-success">Cetak</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td class="text-center">2023</td>
-                                            <td class="text-center"><span class="badge badge-primary" data-toggle="modal" data-target="#exampleModalScrollable">Cek Point</span></td>
-                                            <td class="text-center"><span class="badge badge-success">Cetak</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td class="text-center">2024</td>
-                                            <td class="text-center"><span class="badge badge-primary" data-toggle="modal" data-target="#exampleModalScrollable">Cek Point</span></td>
-                                            <td class="text-center"><span class="badge badge-success">Cetak</span></td>
-                                        </tr>
+                                        @forelse ($point_santris as $point_santri)
+                                            @php
+
+                                                $tanggal_point = \Carbon\Carbon::parse(
+                                                    $point_santri->tanggal_point_santri,
+                                                )->translatedFormat('d F Y'); // Format tanggal dengan hari dan bulan dalam bahasa Indonesia
+
+                                                $jam_point = \Carbon\Carbon::parse(
+                                                    $point_santri->tanggal_point_santri,
+                                                )->format('H:i'); // Format waktu
+
+                                            @endphp
+                                            <tr>
+                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                <td class="text-center">{{ $tanggal_point }}</td>
+                                                <td class="text-center">
+                                                    @switch($point_santri->jenis_point_santri)
+                                                        @case('A')
+                                                            Pelanggaran Kehadiran
+                                                        @break
+
+                                                        @case('B')
+                                                            Pelanggaran Etika, Kesusilaan, dan Perkelahian
+                                                        @break
+
+                                                        @case('C')
+                                                            Pelanggaran Administrasi
+                                                        @break
+
+                                                        @case('D')
+                                                            Pelanggaran Permainan dan Barang atau Benda Terlarang
+                                                        @break
+
+                                                        @case('E')
+                                                            Pelanggaran Tindakan Pengrusakan dan Kriminal
+                                                        @break
+
+                                                        @default
+                                                            Lainnya
+                                                    @endswitch
+                                                </td>
+                                                <td class="text-center">{{ $point_santri->jumlah_point_santri }}</td>
+                                                <td style="max-width: 200px;">
+                                                    {{ $point_santri->deskripsi_point_santri }}
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr class="text-center">
+                                                <td colspan="6">Tidak ada data</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
