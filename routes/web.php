@@ -75,11 +75,10 @@ Route::middleware(['auth:web'])->group(function () {
   Route::put('/admin/mata_pelajaran/{id}/edit', [AdminMataPelajaranController::class, 'edit']);
   Route::delete('/admin/mata_pelajaran/{id}/delete', [AdminMataPelajaranController::class, 'delete']);
   Route::get('/admin/hafalan', [AdminHafalanController::class, 'index'])->name('hafalan');
-  Route::get('/admin/hafalan/create', [AdminHafalanController::class, 'create'])->name('hafalan.create');
-  Route::post('/admin/hafalan/create/action', [AdminHafalanController::class, 'store']);
-  Route::get('/admin/hafalan/edit/{id}', [AdminHafalanController::class, 'edit'])->name('hafalan.edit');
-  Route::put('/admin/hafalan/edit/{id}/action', [AdminHafalanController::class, 'update']);
-  Route::delete('/admin/hafalan/delete/{id}', [AdminHafalanController::class, 'destroy']);
+  Route::get('/admin/hafalan/{id}', [AdminHafalanController::class, 'index_hafalan']);
+  Route::post('/admin/hafalan/{id}/create', [AdminHafalanController::class, 'create']);
+  Route::put('/admin/hafalan/{id}/edit', [AdminHafalanController::class, 'edit']);
+  Route::delete('/admin/hafalan/{id}/delete', [AdminHafalanController::class, 'delete']);
   Route::get('/admin/point_pelanggaran', [AdminPointPelanggaranController::class, 'index'])->name('point_pelanggaran');
   Route::get('/admin/point_pelanggaran/{id}', [AdminPointPelanggaranController::class, 'index_point']);
   Route::post('/admin/point_pelanggaran/{id}/create', [AdminPointPelanggaranController::class, 'create']);

@@ -16,8 +16,8 @@
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/beranda') }}">Main</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Penilaian Santri</li>
                         <li class="breadcrumb-item active" aria-current="page">Hafalan Al-Qur'an</li>
+                        <li class="breadcrumb-item active" aria-current="page">Point Pelanggaran</li>
                     </ul>
                 </nav>
             </div>
@@ -127,24 +127,61 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Data Hafalan Al-Qur'an Santri</h4>
+                                <h4 class="card-title">Data Hafalan Al-Qur'an {{ $santri->nama_santri }}</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div class="table-responsive pb-3 pt-3 px-3">
-                                <table id="tableSantri" class="table" role="grid"
-                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                            <div class="table-responsive">
+                                <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Nama Santri</th>
-                                            <th>Tahun Masuk</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Status</th>
+                                            <th class="text-center">Surah</th>
+                                            <th class="text-center">Total Ayat</th>
+                                            <th class="text-center">Progress Ayat</th>
+                                            <th class="text-center">Status Hafalan</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse ($hafalans as $hafalan)
+                                            <tr>
+                                                <td class="text-center">
+                                                    {{ str_replace('_', '-', \App\Enums\Surah::getKey($hafalan->surah)) }}
+                                                </td>
+                                                <td class="text-center">{{ $hafalan->total_ayat }} ayat</td>
+                                                <form
+                                                    action="{{ url('/admin/hafalan/' . $hafalan->id_hafalan . '/edit') }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <td class="text-center">
+                                                        <div class="form-group">
+                                                            <input class="form-control" type="number" id="progress_ayat"
+                                                                name="progress_ayat" min="0"
+                                                                max="{{ $hafalan->total_ayat }}"
+                                                                value="{{ $hafalan->progress_ayat }}" required
+                                                                onchange="this.form.submit();">
+                                                        </div>
+                                                        <input type="hidden" name="id_santri" class="form-control"
+                                                            value="{{ $santri->id_santri }}">
+                                                        <input type="hidden" name="surah" class="form-control"
+                                                            value="{{ $hafalan->surah }}">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if ($hafalan->status == 'proses')
+                                                            <span class="badge badge-pill badge-warning">Proses
+                                                                Menghafal</span>
+                                                        @else
+                                                            <span class="badge badge-pill badge-success">Sudah Hafal</span>
+                                                        @endif
+                                                    </td>
+                                                </form>
+                                            </tr>
+                                        @empty
+                                            <tr class="text-center">
+                                                <td colspan="4">Tidak ada data</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -154,78 +191,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('js')
-    <script>
-        $(document).ready(function() {
-            $('#tableSantri').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('mata_pelajaran') }}",
-                columns: [
-                    // Kolom nomor urut
-                    {
-                        data: null,
-                        searchable: false,
-                        orderable: false,
-                        render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
-                    // Kolom nama santri
-                    {
-                        data: 'nama_santri',
-                        name: 'nama_santri'
-                    },
-                    {
-                        data: 'tahun_masuk',
-                        name: 'tahun_masuk'
-                    },
-                    {
-                        data: 'jenis_kelamin_santri',
-                        name: 'jenis_kelamin_santri',
-                        render: function(data, type, full, meta) {
-                            switch (full.jenis_kelamin_santri) {
-                                case 'laki-laki':
-                                    return '<p>Laki - laki</p>';
-                                default:
-                                    return '<p>Perempuan</p>';
-                            }
-                        }
-                    },
-                    {
-                        data: 'status_santri',
-                        name: 'status_santri',
-                        render: function(data, type, full, meta) {
-                            if (data === 'pulang') {
-                                return '<span class="badge badge-pill badge-primary">Pulang</span>';
-                            } else {
-                                return '<span class="badge badge-pill badge-success">Menetap</span>';
-                            }
-                        }
-                    },
-                    {
-                        data: 'id_santri',
-                        name: 'id_santri',
-                        render: function(data, type, full, meta) {
-                            return '<td class="text-center">' +
-                                '<div class="d-flex align-items-center">' +
-                                // Info button
-                                '<a data-placement="top" title="Info" href="/admin/hafalan/' +
-                                full.id_santri + '" style="font-size: 15px;">' +
-                                '<span class="badge badge-primary"><i class="ri-information-line"></i> Cek Hafalan</span>' +
-                                '</a>' +
-                                '</div>' +
-                                '</td>';
-                        }
-                    },
-                ],
-                lengthMenu: [
-                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
-                    ['10', '25', '50', '100', 'Semua']
-                ]
-            });
-
-        });
-    </script>
 @endsection

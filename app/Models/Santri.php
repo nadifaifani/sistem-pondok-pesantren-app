@@ -31,6 +31,11 @@ class Santri extends Model
         return $this->hasOne(WaliSantri::class, 'id_santri', 'id_santri');
     }
     
+    public function Pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_santri', 'id_santri');
+    }
+    
     public function NilaiSantri()
     {
         return $this->hasMany(NilaiSantri::class, 'id_santri', 'id_santri');
@@ -41,9 +46,10 @@ class Santri extends Model
         return $this->hasMany(PointSantri::class, 'id_santri', 'id_santri');
     }
 
-    public function Pembayaran()
+    public function Hafalan()
     {
-        return $this->hasMany(Pembayaran::class, 'id_santri', 'id_santri');
+        return $this->hasMany(Hafalan::class, 'id_santri', 'id_santri');
     }
+
 
 }

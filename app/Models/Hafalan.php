@@ -9,15 +9,17 @@ class Hafalan extends Model
 {
     use HasFactory;
     protected $table = 'hafalans';
+    protected $primaryKey = 'id_hafalan';
     protected $fillable = [
-        'santri_id',
+        'id_santri',
         'surah',
-        'ayat',
-        'tanggal',
+        'total_ayat',
+        'progres_ayat',
+        'status',
     ];
 
     public function santri()
     {
-        return $this->belongsTo(Santri::class, 'santri_id', 'id_santri');
+        return $this->belongsTo(Santri::class, 'id_santri', 'id_santri');
     }
 }

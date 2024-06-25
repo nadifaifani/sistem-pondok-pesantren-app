@@ -38,7 +38,7 @@
                     <ul class="navbar-nav ml-auto navbar-list">
                         {{-- FullScreen --}}
                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen">
-                            <i class="ri-fullscreen-line"></i></a></li>
+                                <i class="ri-fullscreen-line"></i></a></li>
                     </ul>
                 </div>
                 <ul class="navbar-list">
@@ -49,7 +49,7 @@
                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
                                 <div class="iq-card-body p-0 ">
                                     <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white line-height">{{Auth::user()->nama_wali_santri}}</h5>
+                                        <h5 class="mb-0 text-white line-height">{{ Auth::user()->nama_wali_santri }}</h5>
                                         <span class="text-white font-size-12">Online</span>
                                     </div>
                                     <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
@@ -98,120 +98,69 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
-                       <div class="iq-card-header d-flex justify-content-between">
-                          <div class="iq-header-title">
-                             <h4 class="card-title">Cek Hafalan Santri</h4>
-                          </div>
-                       </div>
-                       <div class="iq-card-body">
-                          <p>Selamat datang di halaman Cek Hafalan Santri Pondok Pesantren Al Huda.</p>
-                          <div class="table-responsive">
-                             <table class="table">
-                                <thead>
-                                   <tr>
-                                      <th scope="col">#</th>
-                                      <th class="text-center" scope="col">Tahun</th>
-                                      <th class="text-center" scope="col">Total Hafalan</th>
-                                      <th class="text-center" scope="col">Nilai</th>
-                                      <th class="text-center" scope="col">Hafalan</th>
-                                      <th class="text-center" scope="col">Cetak Hasil</th>
-                                   </tr>
-                                </thead>
-                                <tbody>
-                                   <tr>
-                                      <th scope="row">1</th>
-                                      <td class="text-center">2023</td>
-                                      <td class="text-center">30</td>
-                                      <td class="text-center">85</td>
-                                      <td class="text-center"><span class="badge badge-primary" data-toggle="modal" data-target="#exampleModalScrollable">Cek Hafalan</span></td>
-                                      <td class="text-center"><span class="badge badge-success">Cetak</span></td>
-                                   </tr>
-                                   <tr>
-                                      <th scope="row">2</th>
-                                      <td class="text-center">2023</td>
-                                      <td class="text-center">31</td>
-                                      <td class="text-center">90</td>
-                                      <td class="text-center"><span class="badge badge-primary" data-toggle="modal" data-target="#exampleModalScrollable">Cek Hafalan</span></td>
-                                      <td class="text-center"><span class="badge badge-success">Cetak</span></td>
-                                   </tr>
-                                   <tr>
-                                      <th scope="row">3</th>
-                                      <td class="text-center">2024</td>
-                                      <td class="text-center">28</td>
-                                      <td class="text-center">81</td>
-                                      <td class="text-center"><span class="badge badge-primary" data-toggle="modal" data-target="#exampleModalScrollable">Cek Hafalan</span></td>
-                                      <td class="text-center"><span class="badge badge-success">Cetak</span></td>
-                                   </tr>
-                                </tbody>
-                             </table>
-                          </div>
-                       </div>
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Cek Hafalan Santri</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <p>Selamat datang di halaman Cek Hafalan Santri Pondok Pesantren Al Huda.</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Surah</th>
+                                            <th class="text-center">Total Ayat</th>
+                                            <th class="text-center">Progress Ayat</th>
+                                            <th class="text-center">Status Hafalan</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($hafalans as $hafalan)
+                                            <tr>
+                                                <td class="text-center">
+                                                    {{ str_replace('_', '-', \App\Enums\Surah::getKey($hafalan->surah)) }}
+                                                </td>
+                                                <td class="text-center">{{ $hafalan->total_ayat }} ayat</td>
+                                                <td class="text-center">{{ $hafalan->progress_ayat }} ayat</td>
+                                                <td class="text-center">
+                                                    @if ($hafalan->status == 'proses')
+                                                        @php
+                                                            $presentase =
+                                                                ($hafalan->progress_ayat / $hafalan->total_ayat) * 100;
+                                                        @endphp
+                                                        @if (number_format($presentase) == 0)
+                                                            <span class="badge badge-pill badge-danger">Belum Hafalan</span>
+                                                        @else
+                                                            <div class="progress"
+                                                                style="height: 20px; width:50%; margin: auto;">
+                                                                <div class="progress-bar bg-warning text-dark"
+                                                                    role="progressbar"
+                                                                    style="width: {{ number_format($presentase) }}%;"
+                                                                    aria-valuenow="{{ number_format($presentase) }}"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                    {{ number_format($presentase) }}%
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <span class="badge badge-pill badge-success">Sudah Hafal</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr class="text-center">
+                                                <td colspan="4">Tidak ada data</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Nilai Santri</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Konten modal di sini -->
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center">No</th>
-                                <th scope="col">Juz</th>
-                                <th scope="col">Surat dan Ayat terakhir</th>
-                                <th scope="col">Total Hafalan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row" class="text-center">1</th>
-                                <td>29</td>
-                                <td>Al Mulk:30</td>
-                                <td>2 Juz</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-center">2</th>
-                                <td>28</td>
-                                <td>Al Jum'ah:11</td>
-                                <td>2 Juz</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-center">3</th>
-                                <td>28</td>
-                                <td>Al Mujadalah:6</td>
-                                <td>3 Juz</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-center">4</th>
-                                <td>27</td>
-                                <td>Al Hadid:29</td>
-                                <td>3 Juz 2 Lembar</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-center">5</th>
-                                <td>28</td>
-                                <td>Al Mumtahan:5</td>
-                                <td>3 Juz 6 Lembar</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-

@@ -301,7 +301,7 @@
         </div>
     </div>
 
-    <!-- Modal Create-->
+    <!-- Modal Edit-->
     @foreach ($point_santris as $point_santri)
         <div class="modal fade" id="edit_point{{ $point_santri->id_point_santri }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true">

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Wali;
 
-use App\Http\Controllers\Controller;
+use App\Models\Santri;
+use App\Models\Hafalan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class WaliCekHafalanController extends Controller
 {
@@ -11,8 +14,17 @@ class WaliCekHafalanController extends Controller
     {
         $data['title'] = 'Cek Hafalan';
 
-        return view('wali.progres_santri.cek_hafalan', [
+        $id_santri = Auth::user()->id_santri;
 
+        $santri = Santri::where('id_santri', $id_santri)->first();
+
+        $hafalans = Hafalan::where('id_santri', $id_santri)
+            ->orderBy('surah', 'asc')
+            ->get();
+
+        return view('wali.progres_santri.cek_hafalan', [
+            'santri' => $santri,
+            'hafalans' => $hafalans
         ], $data);
     }
 
