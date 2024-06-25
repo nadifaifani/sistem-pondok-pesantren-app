@@ -166,6 +166,15 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
+    <script>
+        // Script untuk menutup alert setelah beberapa detik
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById("success-alert").style.display = "none";
+                document.getElementById("error-alert").style.display = "none";
+            }, 5000); // Waktu dalam milidetik (5000 ms = 5 detik)
+        };
+    </script>
     @yield('js')
 </body>
 

@@ -51,81 +51,89 @@
                                 <i class="ri-home-4-line"></i><span>Beranda</span>
                             </a>
                         </li>
-                        <li class="iq-menu-title">
-                            <i class="ri-separator"></i><span>Keuangan</span>
-                        </li>
-                        <li class="@if (request()->routeIs('daftar_ulang') || request()->routeIs('iuran_bulanan') || request()->routeIs('tamrin')) active @endif">
-                            <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
-                                aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
-                                <i class="ri-arrow-right-s-line iq-arrow-right"></i>
-                            </a>
-                            <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a
-                                        href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
-                                <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a
-                                        href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
-                                <li class="@if (request()->routeIs('tamrin')) active @endif"><a
-                                        href="{{ route('tamrin') }}">Tamrin</a></li>
-                            </ul>
-                        </li>
-                        <li class="@if (request()->routeIs('pemasukan')) active @endif">
-                            <a href="{{ route('pemasukan') }}" class="iq-waves-effect"><i
-                                    class="ri-chat-check-line"></i><span>Pemasukan</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('pengeluaran')) active @endif">
-                            <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
-                                    class="ri-message-line"></i><span>Pengeluaran</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('laporan_keuangan')) active @endif">
-                            <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i
-                                    class="ri-calendar-2-line"></i><span>Laporan Keuangan</span>
-                            </a>
-                        </li>
-                        <li class="iq-menu-title">
-                            <i class="ri-separator"></i><span>Santri</span>
-                        </li>
-                        <li class="@if (request()->routeIs('pendaftaran')) active @endif">
-                            <a href="{{ route('pendaftaran') }}" class="iq-waves-effect"><i
-                                    class="ri-pages-line"></i><span>Pendaftaran Baru</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('santri')) active @endif">
-                            <a href="{{ route('santri') }}" class="iq-waves-effect"><i
-                                    class="ri-user-line"></i><span>Santri</span>
-                            </a>
-                        </li>
-                        <li class="@if (request()->routeIs('mata_pelajaran') || request()->routeIs('hafalan') || request()->routeIs('point_pelanggaran')) active @endif">
-                            <a href="#progres" class="iq-waves-effect collapsed" data-toggle="collapse"
-                                aria-expanded="false"><i class="ri-pages-line"></i><span>Penilaian Santri</span>
-                                <i class="ri-arrow-right-s-line iq-arrow-right"></i>
-                            </a>
-                            <ul id="progres" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="@if (request()->routeIs('mata_pelajaran')) active @endif"><a
-                                    href="{{ route('mata_pelajaran') }}">Mata Pelajaran</a></li>
-                            <li class="@if (request()->routeIs('hafalan')) active @endif"><a
-                                    href="{{ route('hafalan') }}">Hafalan Al-Qur'an</a></li>
-                            <li class="@if (request()->routeIs('point_pelanggaran')) active @endif"><a
-                                    href="{{ route('point_pelanggaran') }}">Point Pelanggaran</a></li>
+
+                        @if (auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin_pembayaran')
+                            <li class="iq-menu-title">
+                                <i class="ri-separator"></i><span>Keuangan</span>
+                            </li>
+                            <li class="@if (request()->routeIs('daftar_ulang') || request()->routeIs('iuran_bulanan') || request()->routeIs('tamrin')) active @endif">
+                                <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
+                                    aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
+                                    <i class="ri-arrow-right-s-line iq-arrow-right"></i>
+                                </a>
+                                <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                    <li class="@if (request()->routeIs('daftar_ulang')) active @endif"><a
+                                            href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                                    <li class="@if (request()->routeIs('iuran_bulanan')) active @endif"><a
+                                            href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
+                                    <li class="@if (request()->routeIs('tamrin')) active @endif"><a
+                                            href="{{ route('tamrin') }}">Tamrin</a></li>
+                                </ul>
+                            </li>
+                            <li class="@if (request()->routeIs('pemasukan')) active @endif">
+                                <a href="{{ route('pemasukan') }}" class="iq-waves-effect"><i
+                                        class="ri-chat-check-line"></i><span>Pemasukan</span>
+                                </a>
+                            </li>
+                            <li class="@if (request()->routeIs('pengeluaran')) active @endif">
+                                <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
+                                        class="ri-message-line"></i><span>Pengeluaran</span>
+                                </a>
+                            </li>
+                            <li class="@if (request()->routeIs('laporan_keuangan')) active @endif">
+                                <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i
+                                        class="ri-calendar-2-line"></i><span>Laporan Keuangan</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->role == 'super_admin' ||
+                                auth()->user()->role == 'admin_pembayaran' ||
+                                auth()->user()->role == 'admin_penilaian')
+                            <li class="iq-menu-title">
+                                <i class="ri-separator"></i><span>Santri</span>
+                            </li>
+                            @if (auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin_pembayaran')
+                                <li class="@if (request()->routeIs('pendaftaran')) active @endif">
+                                    <a href="{{ route('pendaftaran') }}" class="iq-waves-effect"><i
+                                            class="ri-pages-line"></i><span>Pendaftaran Baru</span>
+                                    </a>
                                 </li>
-                            </ul>
-                        </li>
-                        {{-- Tambahan Menu --}}
-                        <li class="iq-menu-title">
-                            <i class="ri-separator"></i><span>Master</span>
-                        </li>
-                        <li class="@if (request()->routeIs('master_admin')) active @endif">
-                            <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
-                                    class="ri-profile-line"></i><span>Master
-                                    Admin</span>
-                            </a>
-                        </li>
-                        {{-- <li class="@if (request()->routeIs('master_guest')) active @endif">
-                            <a href="" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master
-                                    Guest</span>
-                            </a>
-                        </li> --}}
+                            @endif
+                            <li class="@if (request()->routeIs('santri')) active @endif">
+                                <a href="{{ route('santri') }}" class="iq-waves-effect"><i
+                                        class="ri-user-line"></i><span>Santri</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin_penilaian')
+                            <li class="@if (request()->routeIs('mata_pelajaran') || request()->routeIs('hafalan') || request()->routeIs('point_pelanggaran')) active @endif">
+                                <a href="#progres" class="iq-waves-effect collapsed" data-toggle="collapse"
+                                    aria-expanded="false"><i class="ri-pages-line"></i><span>Penilaian Santri</span>
+                                    <i class="ri-arrow-right-s-line iq-arrow-right"></i>
+                                </a>
+                                <ul id="progres" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                    <li class="@if (request()->routeIs('mata_pelajaran')) active @endif"><a
+                                            href="{{ route('mata_pelajaran') }}">Mata Pelajaran</a></li>
+                                    <li class="@if (request()->routeIs('hafalan')) active @endif"><a
+                                            href="{{ route('hafalan') }}">Hafalan Al-Qur'an</a></li>
+                                    <li class="@if (request()->routeIs('point_pelanggaran')) active @endif"><a
+                                            href="{{ route('point_pelanggaran') }}">Point Pelanggaran</a></li>
+                                </ul>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->role == 'super_admin')
+                            <li class="iq-menu-title">
+                                <i class="ri-separator"></i><span>Master</span>
+                            </li>
+                            <li class="@if (request()->routeIs('master_admin')) active @endif">
+                                <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                        class="ri-profile-line"></i><span>Master Admin</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
                 <div class="p-3"></div>
@@ -206,8 +214,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-
-
+    <script>
+        // Script untuk menutup alert setelah beberapa detik
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById("success-alert").style.display = "none";
+                document.getElementById("error-alert").style.display = "none";
+            }, 5000); // Waktu dalam milidetik (5000 ms = 5 detik)
+        };
+    </script>
     @yield('js')
 </body>
 

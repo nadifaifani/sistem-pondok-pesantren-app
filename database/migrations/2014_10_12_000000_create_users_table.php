@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('remember_token')->nullable();
-            $table->string('role')->default('admin');
+            $table->enum('role',['super_admin', 'admin_pembayaran', 'admin_penilaian'])->default('super_admin');
             $table->string('no_hp_admin');
             $table->timestamps();
         });

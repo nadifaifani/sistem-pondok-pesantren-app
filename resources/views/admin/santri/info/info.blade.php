@@ -108,7 +108,8 @@
                                             class="rounded img-fluid w-100" style="height: 25vh; object-fit: cover;">
                                     </div>
                                     <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
-                                        <li><a href="{{ url('/admin/santri/edit/' . $santri->id_santri) }}"><i class="ri-pencil-line"></i></a></li>
+                                        <li><a href="{{ url('/admin/santri/edit/' . $santri->id_santri) }}"><i
+                                                    class="ri-pencil-line"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="profile-info p-4">
@@ -278,11 +279,13 @@
                                                             @endif
                                                             untuk semester {{ $pembayaran->semester_ajaran }} tahun
                                                             {{ $pembayaran->tahun_ajaran }} sejumlah
-                                                            {{ 'RP ' . number_format($pembayaran->jumlah_pembayaran, 0, ',', '.') }},
-                                                            <a class="text-primary" data-placement="top" title="Bayar"
-                                                                href="#"
-                                                                data-target="#bayarModal{{ $pembayaran->id_pembayaran }}"
-                                                                data-toggle="modal">Bayar Sekarang</a>
+                                                            {{ 'RP ' . number_format($pembayaran->jumlah_pembayaran, 0, ',', '.') }}
+                                                            @if (auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin_pembayaran')
+                                                                , <a class="text-primary" data-placement="top"
+                                                                    title="Bayar" href="#"
+                                                                    data-target="#bayarModal{{ $pembayaran->id_pembayaran }}"
+                                                                    data-toggle="modal">Bayar Sekarang</a>
+                                                            @endif
                                                         </p>
                                                     </div>
                                                 </li>

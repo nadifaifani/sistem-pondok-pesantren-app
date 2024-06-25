@@ -20,8 +20,24 @@ class AdminSeeder extends Seeder
             'nama_admin' => 'Super Admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('password123'),
-            'role' => 'admin',
+            'role' => 'super_admin',
             'no_hp_admin' => '08123456789'
+        ]);
+
+        User::create([
+            'nama_admin' => 'Admin Pembayaran',
+            'email' => 'pembayaran@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'admin_pembayaran',
+            'no_hp_admin' => '08123456780'
+        ]);
+
+        User::create([
+            'nama_admin' => 'Admin Penilaian',
+            'email' => 'penilaian@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'admin_penilaian',
+            'no_hp_admin' => '08123456781'
         ]);
     }
 }
