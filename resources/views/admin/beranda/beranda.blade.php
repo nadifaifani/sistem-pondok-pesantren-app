@@ -161,7 +161,7 @@
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h5 class="card-title">Pemasukan dan Pengeluaran Pondok</h5>
+                                <h5 class="card-title mt-3">Pemasukan dan Pengeluaran Pondok</h5>
                                 <p class="text-muted mt-2">Grafik menunjukkan peningkatan pemasukan dan pengeluaran perbulan.</p>
                             </div>
                         </div>
