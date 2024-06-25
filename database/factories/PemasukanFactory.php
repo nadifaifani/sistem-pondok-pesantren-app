@@ -20,9 +20,11 @@ class PemasukanFactory extends Factory
     {
         return [
             'id_admin' => 1,
+            'nama_pengirim' => $this->faker->name(),
             'jumlah_pemasukan' => $this->faker->numberBetween(1000, 1000000),
             'tanggal_pemasukan' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'deskripsi_pemasukan' => $this->faker->sentence(),
+            'bukti_pemasukan' => 'transfer.png',
             'created_at' => now(),
             'updated_at' => now(),
         ];

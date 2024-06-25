@@ -33,19 +33,26 @@
                     </h6>
                 </div>
                 <div class="row px-5">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <button class="btn btn-primary d-inline-flex align-items-center" type="button"
                             onclick="location.href='{{ url('/pendaftaran-santri-baru') }}'">
-                            Pendaftaran Santri Baru
+                            Pendaftaran
                             <span class="ms-3"><i class="bi bi-chevron-right"></i></span>
                         </button>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <button class="btn btn-link d-inline-flex align-items-center" type="button"
                             onclick="location.href='#formlogin'" style="text-decoration: none">
                             Login Website
                             <span class="ms-3"><i class="bi bi-chevron-right"></i></span>
                         </button>
+                    </div>
+                    <div class="col-lg-4">
+                        <a class="btn btn-link d-inline-flex align-items-center" type="button"
+                            href="{{ url('/donasi') }}" style="text-decoration: none">
+                            Donasi
+                            <span class="ms-3"><i class="bi bi-chevron-right"></i></span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -70,7 +77,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body p-navy pb-0">
-                                <h3 class="fw-bold">100 <span class="ms-2"><i class="bi bi-people-fill"></i></span></h3>
+                                <h3 class="fw-bold">{{ $total_santri }} <span class="ms-2"><i class="bi bi-people-fill"></i></span></h3>
                                 <p>Santri dan Santriwati</p>
                             </div>
                         </div>
@@ -78,7 +85,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body p-navy pb-0">
-                                <h3 class="fw-bold">100 <span class="ms-2"><i class="bi bi-people-fill"></i></span></h3>
+                                <h3 class="fw-bold">{{ $total_guru }} <span class="ms-2"><i class="bi bi-people-fill"></i></span></h3>
                                 <p>Tenaga Pendidik</p>
                             </div>
                         </div>

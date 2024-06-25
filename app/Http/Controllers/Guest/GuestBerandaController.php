@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Guest;
 
-use App\Http\Controllers\Controller;
+use App\Models\Pengajar;
+use App\Models\Santri;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class GuestBerandaController extends Controller
@@ -19,8 +21,13 @@ class GuestBerandaController extends Controller
             $imageNames[] = basename($imageFile);
         }
 
+        $total_santri = Santri::count();
+        $total_guru = Pengajar::count();
+
         return view('guest.beranda.beranda', [
             'imageNames' => $imageNames,
+            'total_santri' => $total_santri,
+            'total_guru' => $total_guru,
         ], $data);
     }
 

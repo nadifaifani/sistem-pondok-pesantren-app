@@ -12,9 +12,11 @@ class Pemasukan extends Model
     protected $table = 'pemasukans';
     protected $primaryKey = 'id_pemasukan';
     protected $fillable = [
+        'nama_pengirim',
         'jumlah_pemasukan',
         'tanggal_pemasukan',
         'deskripsi_pemasukan',
+        'bukti_pemasukan',
         'id_admin',
     ];
 

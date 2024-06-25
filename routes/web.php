@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guest\GuestDonasiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Wali\WaliBerandaController;
 use App\Http\Controllers\Wali\WaliTagihanController;
@@ -40,6 +41,9 @@ Route::middleware(['guest:web,wali_santri'])->group(function () {
   Route::get('/pendaftaran-santri-baru', [GuestPendaftaranController::class, 'index']);
   Route::post('/pendaftaran-santri-baru', [GuestPendaftaranController::class, 'create']);
   Route::get('/pendaftaran-santri-baru/konfirmasi/{id}', [GuestPendaftaranController::class, 'index_konfirmasi'])->name('guest.pendaftaran.konfirmasi');
+  Route::get('/donasi', [GuestDonasiController::class, 'index']);
+  Route::post('/donasi/create', [GuestDonasiController::class, 'create']);
+  Route::get('/donasi/finish/{id}', [GuestDonasiController::class, 'index_finish'])->name('guest.donasi.finish');
 });
 
 Route::middleware(['auth:web'])->group(function () {
