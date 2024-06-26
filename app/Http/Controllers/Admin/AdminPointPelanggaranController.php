@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\PointSantri;
 use App\Models\Santri;
-use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Helpers\SemesterHelper;
 
 class AdminPointPelanggaranController extends Controller
 {
@@ -31,13 +31,18 @@ class AdminPointPelanggaranController extends Controller
 
         $santri = Santri::where('id_santri', $id_santri)->first();
 
+        $currentSemester = SemesterHelper::getCurrentSemester();
+
         $point_santris = PointSantri::where('id_santri', $id_santri)
+            ->where('semester_ajaran', $currentSemester['semester'])
+            ->where('tahun_ajaran', $currentSemester['tahun'])
             ->orderBy('tanggal_point_santri', 'desc')
             ->get();
-        
+
         return view('admin.penilaian_santri.info.info_point_pelanggaran', [
             'santri' => $santri,
             'point_santris' => $point_santris,
+            'currentSemester' => $currentSemester,
         ], $data);
     }
 
@@ -51,12 +56,16 @@ class AdminPointPelanggaranController extends Controller
             'deskripsi_point_santri' => 'required|string|max:255',
         ]);
 
+        $currentSemester = SemesterHelper::getCurrentSemester();
+
         // Buat instance baru dari PointSantri
         $pointSantri = new PointSantri();
-        
+
         // Isi data
         $pointSantri->id_santri = $id_santri;
         $pointSantri->tanggal_point_santri = $validatedData['tanggal_point_santri'];
+        $pointSantri->semester_ajaran = $currentSemester['semester'];
+        $pointSantri->tahun_ajaran = $currentSemester['tahun'];
         $pointSantri->jenis_point_santri = $validatedData['jenis_point_santri'];
         $pointSantri->jumlah_point_santri = $validatedData['jumlah_point_santri'];
         $pointSantri->deskripsi_point_santri = $validatedData['deskripsi_point_santri'];
@@ -67,7 +76,7 @@ class AdminPointPelanggaranController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Point pelanggaran berhasil ditambahkan.');
     }
-    
+
     public function edit(Request $request, $id_point_santri)
     {
         // Validasi input
@@ -79,7 +88,7 @@ class AdminPointPelanggaranController extends Controller
         ]);
 
         // Cari record point santri
-        $pointSantri = PointSantri::where('id_point_santri',$id_point_santri)->first();
+        $pointSantri = PointSantri::where('id_point_santri', $id_point_santri)->first();
 
         // Update data
         $pointSantri->tanggal_point_santri = $validatedData['tanggal_point_santri'];

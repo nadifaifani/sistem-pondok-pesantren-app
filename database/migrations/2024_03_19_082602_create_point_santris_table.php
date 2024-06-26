@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id('id_point_santri');
             $table->unsignedBigInteger('id_santri')->nullable();
             $table->dateTime('tanggal_point_santri');
+            $table->enum('semester_ajaran', ['ganjil', 'genap']);
+            $table->year('tahun_ajaran');
             $table->enum('jenis_point_santri',[
                 'A',
                 'B',

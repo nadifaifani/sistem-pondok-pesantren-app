@@ -12,6 +12,8 @@ class PointSantri extends Model
     protected $primaryKey = 'id_point_santri';
     protected $fillable = [
         'tanggal_point_santri',
+        'semester_ajaran',
+        'tahun_ajaran',
         'jenis_point_santri',
         'jumlah_point_santri',
         'deskripsi_point_santri',

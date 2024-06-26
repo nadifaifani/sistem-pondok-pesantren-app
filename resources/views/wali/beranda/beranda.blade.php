@@ -48,7 +48,7 @@
                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
                                 <div class="iq-card-body p-0 ">
                                     <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white line-height">{{Auth::user()->nama_wali_santri}}</h5>
+                                        <h5 class="mb-0 text-white line-height">{{ Auth::user()->nama_wali_santri }}</h5>
                                         <span class="text-white font-size-12">Online</span>
                                     </div>
                                     <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
@@ -97,24 +97,22 @@
             <div class="row">
                 <div class="col-sm-12">
                     <!-- Card -->
-                    <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <img src="{{ asset('images/pondok/IdulAdha.jpg') }}" class="card-img"
-                                        alt="Gambar Qurban">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Infaq Qurban</h4>
-                                        <p class="card-text">Santri dimohon untuk melakukan pembayaran infaq Qurban Idul
-                                            Adha 2024</p>
-                                        <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan
-                                            tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
-                                        <p class="card-text">TU Putra, Ustadz. Abdul – 081206583614</p>
-                                        <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p <p class="card-text">
-                                        <small class="text-muted">Last updated 3 mins ago</small></p>
-                                    </div>
+                    <div class="card iq-mb-3">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{ asset('images/pondok/IdulAdha.jpg') }}" class="card-img"
+                                alt="Gambar Qurban">                            
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h4 class="card-title">Infaq Qurban</h4>
+                                    <p class="card-text">Santri dimohon untuk melakukan pembayaran infaq Qurban Idul
+                                        Adha 2024</p>
+                                    <p class="card-text">Jika ada hal-hal yang ingin ditanyakan terkait dengan kegiatan
+                                        tersebut silahkan menghubungi penanggung jawab dibawah ini :</p>
+                                    <p class="card-text">TU Putra, Ustadz. Abdul – 081206583614</p>
+                                    <p class="card-text">TU Putri, Ustadzah. Anya – 08120686749</p <p
+                                        class="card-text">
                                 </div>
                             </div>
                         </div>
