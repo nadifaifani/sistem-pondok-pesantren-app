@@ -29,6 +29,7 @@ class WaliTagihanController extends Controller
             ->get();
         
         $totaltagihan = Pembayaran::where('id_santri', $id_santri)
+            ->where('status_pembayaran', 'belum_lunas')
             ->where('semester_ajaran', $currentSemester['semester'])
             ->where('tahun_ajaran', $currentSemester['tahun'])
             ->pluck('jumlah_pembayaran')
