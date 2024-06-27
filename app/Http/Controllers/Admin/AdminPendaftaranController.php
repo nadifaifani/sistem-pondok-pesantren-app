@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Surah;
 use App\Models\Santri;
+use App\Models\Hafalan;
 use App\Models\Pembayaran;
 use App\Models\WaliSantri;
 use App\Models\Pendaftaran;
@@ -253,6 +255,19 @@ class AdminPendaftaranController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $surahs = Surah::getValues();
+
+        foreach ($surahs as $surah) {
+            $totalAyat = Surah::$totalAyat[$surah];
+
+            Hafalan::create([
+                'id_santri' => $santri->id_santri,
+                'surah' => $surah,
+                'total_ayat' => $totalAyat,
+                'progress_ayat' => 0,
+            ]);
+        }
 
         return redirect()->route('pendaftaran')->with('success', 'Data santri berhasil di verifikasi !');
     }
