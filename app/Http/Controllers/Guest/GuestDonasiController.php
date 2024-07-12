@@ -26,6 +26,11 @@ class GuestDonasiController extends Controller
             'nama_pengirim' => 'nullable|string|max:255', // Validasi untuk nama pengirim
         ]);
 
+        $nama_pengirim = $request->input('nama_pengirim');
+        if (!$nama_pengirim) {
+            $nama_pengirim = "Hamba Allah";
+        }
+
         // Menyimpan bukti_pemasukan (jika ada)
         if ($request->hasFile('bukti_pemasukan')) {
             $image = $request->file('bukti_pemasukan');
@@ -56,7 +61,7 @@ class GuestDonasiController extends Controller
             'tanggal_pemasukan' => now(),
             'deskripsi_pemasukan' => $request->deskripsi_pemasukan,
             'id_admin' => null,
-            'nama_pengirim' => $request->nama_pengirim,
+            'nama_pengirim' => $nama_pengirim,
             'bukti_pemasukan' => $imageName,
         ]);
 
