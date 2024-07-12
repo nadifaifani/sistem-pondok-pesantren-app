@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\NilaiNotification;
 use App\Models\Santri;
+use App\Models\WaliSantri;
 use App\Models\NilaiSantri;
 use Illuminate\Http\Request;
 use App\Helpers\SemesterHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminMataPelajaranController extends Controller
@@ -104,6 +107,14 @@ class AdminMataPelajaranController extends Controller
             $nilaiSantri->nilai = $request->$mapel; // Menggunakan variabel dinamis untuk nilai berdasarkan mata pelajaran
             $nilaiSantri->save();
         }
+
+        // Kirim email ke wali santri
+        $santri = Santri::where('id_santri', $id_santri)->first();
+        $nama_santri = $santri->nama_santri;
+        $waliSantri = WaliSantri::where('id_santri', $id_santri)->first();
+        if ($waliSantri) {
+            Mail::to($waliSantri->email)->send(new NilaiNotification($nama_santri, $waliSantri));
+        }        
 
         // Redirect atau response sesuai kebutuhan
         return redirect()->back()->with('success', 'Data nilai santri berhasil disimpan.');
