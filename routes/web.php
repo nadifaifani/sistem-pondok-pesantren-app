@@ -101,6 +101,7 @@ Route::middleware(['auth:wali_santri'])->group(function () {
   Route::get('/wali/beranda', [WaliBerandaController::class, 'index'])->name('wali-beranda');
   Route::get('/wali/tagihan', [WaliTagihanController::class, 'index'])->name('tagihan');
   Route::get('/wali/cek_nilai', [WaliCekNilaiController::class, 'index'])->name('cek_nilai');
+  Route::get('/wali/cek_nilai/{id}/print', [WaliCekNilaiController::class, 'print']);
   Route::get('/wali/cek_hafalan', [WaliCekHafalanController::class, 'index'])->name('cek_hafalan');
   Route::get('/wali/cek_point', [WaliCekPointController::class, 'index'])->name('cek_point');
   Route::get('/wali/daftar_pengajar', [WaliDaftarPengajarController::class, 'index'])->name('daftar_pengajar');

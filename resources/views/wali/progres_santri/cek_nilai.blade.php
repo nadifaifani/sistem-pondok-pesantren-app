@@ -131,8 +131,16 @@
                                                 <td class="text-center"><span class="badge badge-primary"
                                                         data-toggle="modal" data-target="#nilai{{ $group }}"
                                                         style="cursor:pointer;">Lihat Nilai</span></td>
-                                                <td class="text-center"><span class="badge badge-success">Cetak
-                                                        Rapot</span></td>
+                                                <form action="{{url('/wali/cek_nilai/' . $santri->id_santri . '/print')}}">
+                                                    <input type="hidden" name="tahun" value="{{$tahun}}">
+                                                    <input type="hidden" name="semester" value="{{$semester}}">
+                                                    <td class="text-center">
+                                                        <button class="btn m-0 p-0" type="submit">
+                                                            <span class="badge badge-success">Cetak
+                                                                Rapot</span>
+                                                        </button>
+                                                    </td>
+                                                </form>
                                             </tr>
                                         @empty
                                             <tr class="text-center">

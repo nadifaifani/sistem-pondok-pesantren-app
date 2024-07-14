@@ -52,4 +52,41 @@ class WaliCekNilaiController extends Controller
             'averageNilai' => $averageNilai,
         ], $data);
     }
+
+    public function print(Request $request, $id_santri)
+    {
+        $data['title'] = 'Print Nilai Santri';
+
+        $semester = $request->input('semester');
+        $tahun = $request->input('tahun');
+
+        $santri = Santri::where('id_santri', $id_santri)->first();
+
+        // Mengambil nilai santri
+        $nilaiSantri = NilaiSantri::where('id_santri', $id_santri)
+            ->where('semester_ajaran', $semester)
+            ->where('tahun_ajaran', $tahun)
+            ->with('santri')
+            ->get();
+
+        // Kelompokkan berdasarkan tahun ajaran dan semester
+        $groupedNilaiSantri = $nilaiSantri->groupBy(function ($item) {
+            return $item->tahun_ajaran . '-' . $item->semester_ajaran;
+        });
+
+        // Rata-rata
+        $averageNilai = NilaiSantri::where('id_santri', $id_santri)
+            ->where('semester_ajaran', $semester)
+            ->where('tahun_ajaran', $tahun)
+            ->pluck('nilai')
+            ->avg();
+
+        return view('wali.progres_santri.print.nilai_print', [
+            'semester' => $semester,
+            'tahun' => $tahun,
+            'santri' => $santri,
+            'groupedNilaiSantri' => $groupedNilaiSantri,
+            'averageNilai' => $averageNilai,
+        ], $data);
+    }
 }
