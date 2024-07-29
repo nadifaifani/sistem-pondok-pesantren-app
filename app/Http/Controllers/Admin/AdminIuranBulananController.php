@@ -18,15 +18,34 @@ class AdminIuranBulananController extends Controller
         $currentSemester = SemesterHelper::getCurrentSemester();
 
         if ($request->ajax()) {
-            $data = Pembayaran::orderBy('created_at', 'desc')
+            // Data untuk tabel yang lunas
+            $dataLunas = Pembayaran::orderBy('created_at', 'desc')
                 ->where('semester_ajaran', $currentSemester['semester'])
                 ->where('tahun_ajaran', $currentSemester['tahun'])
                 ->where('jenis_pembayaran', 'iuran_bulanan')
                 ->where('status_pembayaran', 'lunas')
                 ->with(['santri', 'user'])
                 ->get();
-            return DataTables::of($data)
-                ->make(true);
+
+            // Data untuk tabel yang belum lunas
+            $dataBelumLunas = Pembayaran::orderBy('created_at', 'desc')
+                ->where('semester_ajaran', $currentSemester['semester'])
+                ->where('tahun_ajaran', $currentSemester['tahun'])
+                ->where('jenis_pembayaran', 'iuran_bulanan')
+                ->where('status_pembayaran', 'belum_lunas')
+                ->with(['santri', 'user'])
+                ->get();
+
+            // Kemas kedua set data dalam array atau objek
+            $responseData = [
+                'data' => [
+                    'lunas' => $dataLunas,
+                    'belum_lunas' => $dataBelumLunas,
+                ]
+            ];
+
+            // Kembalikan respons JSON
+            return response()->json($responseData);
         }
 
         $pembayarans = Pembayaran::orderBy('created_at', 'desc')

@@ -145,6 +145,7 @@
                                             <th>TTL</th>
                                             <th>Alamat</th>
                                             <th>No. HP</th>
+                                            <th>Tahun Masuk</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -361,6 +362,10 @@
                     {
                         data: 'no_hp_santri',
                         name: 'no_hp_santri'
+                    },
+                    {
+                        data: 'tahun_masuk',
+                        name: 'tahun_masuk'
                     },
                     // Kolom status santri
                     {
