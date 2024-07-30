@@ -14,15 +14,24 @@ class AdminPengeluaranController extends Controller
         $data['title'] = 'Pengeluaran';
 
         if ($request->ajax()) {
-            $data = Pengeluaran::orderBy('tanggal_pengeluaran', 'desc')->get();
+            $tahun = $request->input('tahun');
+
+            $data = Pengeluaran::whereDate('tanggal_pengeluaran', 'like', $tahun . '%')
+                ->orderBy('tanggal_pengeluaran', 'desc')->get();
+
             return DataTables::of($data)
                 ->make(true);
         }
 
         $pengeluarans = Pengeluaran::all();
 
+        $years = Pengeluaran::selectRaw('YEAR(tanggal_pengeluaran) as year')
+            ->distinct()
+            ->pluck('year');
+
         return view('admin.pengeluaran.pengeluaran', [
             'pengeluarans' => $pengeluarans,
+            'years' => $years,
         ], $data);
     }
 

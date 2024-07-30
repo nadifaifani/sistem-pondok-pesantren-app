@@ -74,24 +74,49 @@ class AdminLaporanKeuanganController extends Controller
             ];
         }
 
+        // Ambil tahun dari tabel Pengeluaran
+        $years1 = Pemasukan::selectRaw('YEAR(tanggal_pemasukan) as year')
+        ->whereNotNull('tanggal_pemasukan')
+        ->distinct()
+        ->pluck('year');
+
+        // Ambil tahun dari tabel Pembayaran
+        $years2 = Pembayaran::selectRaw('YEAR(tanggal_pembayaran) as year')
+        ->whereNotNull('tanggal_pembayaran')
+        ->distinct()
+        ->pluck('year');
+
+        // Gabungkan kedua hasil tanpa duplikat
+        $yearspemasukan = $years1->merge($years2)->unique()->sortDesc()->values();
+        
+        $yearspengeluaran = Pengeluaran::selectRaw('YEAR(tanggal_pengeluaran) as year')
+            ->distinct()
+            ->pluck('year');
+
         return view('admin.laporan_keuangan.laporan_keuangan', [
             'totalpemasukan' => $totalpemasukan,
             'totalpengeluaran' => $totalpengeluaran,
             'totalkeuangan' => $totalkeuangan,
             'chartDataKeuangan' => $mergedData,
+            'yearspemasukan' => $yearspemasukan,
+            'yearspengeluaran' => $yearspengeluaran,
         ], $data);
     }
     
 
-    public function getPemasukan()
+    public function getPemasukan(Request $request)
     {
         $currentSemester = SemesterHelper::getCurrentSemester();
 
+        $tahun = $request->input('tahun');
+
         $pembayarans = Pembayaran::where('status_pembayaran', 'lunas')
+            ->whereDate('tanggal_pembayaran', 'like', $tahun . '%')
             ->orderBy('tanggal_pembayaran', 'desc')
             ->with('santri', 'user')
             ->get();
         $pemasukans = Pemasukan::with('user')
+            ->whereDate('tanggal_pemasukan', 'like', $tahun . '%')
             ->orderBy('created_at', 'desc')    
             ->get();
 

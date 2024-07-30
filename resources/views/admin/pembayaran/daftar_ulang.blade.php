@@ -352,9 +352,11 @@
                 serverSide: true,
                 ajax: {
                     url: "{{ route('daftar_ulang') }}",
+                    data: function(d) {
+                        d.tahun = $('#filterTahunLunas').val(); // Kirim parameter tahun
+                    },
                     dataSrc: function(json) {
-                        console.log("Data Lunas:", json.data.lunas); // Log data lunas
-                        return json.data.lunas; // Akses data untuk yang lunas
+                        return json.data.lunas;
                     }
                 },
                 columns: [
@@ -432,7 +434,22 @@
                 lengthMenu: [
                     [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
                     ['10', '25', '50', '100', 'Semua']
-                ]
+                ],
+                initComplete: function() {
+                    // Membuat dropdown filter tahun di samping kotak pencarian
+                    $('<span class="ml-4"><label>Tahun: <select id="filterTahunLunas" class="form-control"><option value="">Semua Tahun</option></select></label></span>')
+                        .appendTo('#tableDaftarUlangLunas_filter');
+
+                    // Populate tahun options
+                    @foreach($years as $year)
+                        $('#filterTahunLunas').append(new Option('{{ $year }}', '{{ $year }}'));
+                    @endforeach
+
+                    // Menambahkan event listener untuk filter tahun
+                    $('#filterTahunLunas').on('change', function() {
+                        tabel_lunas.ajax.reload();
+                    });
+                }
             });
 
             // Inisialisasi DataTable untuk tabel yang belum lunas
@@ -441,6 +458,9 @@
                 serverSide: true,
                 ajax: {
                     url: "{{ route('daftar_ulang') }}",
+                    data: function(d) {
+                        d.tahun = $('#filterTahunBelumLunas').val(); // Kirim parameter tahun
+                    },
                     dataSrc: function(json) {
                         return json.data.belum_lunas; // Akses data untuk yang belum lunas
                     }
@@ -520,7 +540,22 @@
                 lengthMenu: [
                     [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
                     ['10', '25', '50', '100', 'Semua']
-                ]
+                ],
+                initComplete: function() {
+                    // Membuat dropdown filter tahun di samping kotak pencarian
+                    $('<span class="ml-4"><label>Tahun: <select id="filterTahunBelumLunas" class="form-control"><option value="">Semua Tahun</option></select></label></span>')
+                        .appendTo('#tableDaftarUlangBelumLunas_filter');
+
+                    // Populate tahun options
+                    @foreach($years as $year)
+                        $('#filterTahunBelumLunas').append(new Option('{{ $year }}', '{{ $year }}'));
+                    @endforeach
+
+                    // Menambahkan event listener untuk filter tahun
+                    $('#filterTahunBelumLunas').on('change', function() {
+                        tabel_belum_lunas.ajax.reload();
+                    });
+                }
             });
         });
     </script>

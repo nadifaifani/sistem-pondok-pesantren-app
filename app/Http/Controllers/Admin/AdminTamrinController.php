@@ -18,33 +18,37 @@ class AdminTamrinController extends Controller
         $currentSemester = SemesterHelper::getCurrentSemester();
 
         if ($request->ajax()) {
-            // Data untuk tabel yang lunas
-            $dataLunas = Pembayaran::orderBy('created_at', 'desc')
+            $tahun = $request->input('tahun');
+            
+            $queryLunas = Pembayaran::orderBy('created_at', 'desc')
                 ->where('semester_ajaran', $currentSemester['semester'])
                 ->where('tahun_ajaran', $currentSemester['tahun'])
                 ->where('jenis_pembayaran', 'tamrin')
                 ->where('status_pembayaran', 'lunas')
-                ->with(['santri', 'user'])
-                ->get();
-
-            // Data untuk tabel yang belum lunas
-            $dataBelumLunas = Pembayaran::orderBy('created_at', 'desc')
+                ->with(['santri', 'user']);
+                
+            $queryBelumLunas = Pembayaran::orderBy('created_at', 'desc')
                 ->where('semester_ajaran', $currentSemester['semester'])
                 ->where('tahun_ajaran', $currentSemester['tahun'])
                 ->where('jenis_pembayaran', 'tamrin')
                 ->where('status_pembayaran', 'belum_lunas')
-                ->with(['santri', 'user'])
-                ->get();
-
-            // Kemas kedua set data dalam array atau objek
+                ->with(['santri', 'user']);
+        
+            if (!empty($tahun)) {
+                $queryLunas->whereYear('tanggal_pembayaran', $tahun);
+                $queryBelumLunas->where('tahun_ajaran', $tahun);
+            }
+        
+            $dataLunas = $queryLunas->get();
+            $dataBelumLunas = $queryBelumLunas->get();
+        
             $responseData = [
                 'data' => [
                     'lunas' => $dataLunas,
                     'belum_lunas' => $dataBelumLunas,
                 ]
             ];
-
-            // Kembalikan respons JSON
+        
             return response()->json($responseData);
         }
 
@@ -55,10 +59,16 @@ class AdminTamrinController extends Controller
             ->where('status_pembayaran', 'belum_lunas')
             ->with(['santri', 'user'])
             ->get();
-            
+
+        $years = Pembayaran::selectRaw('YEAR(tanggal_pembayaran) as year')            
+            ->whereNotNull('tanggal_pembayaran')
+            ->distinct()
+            ->pluck('year');
+
         return view('admin.pembayaran.tamrin', [
             'currentSemester' => $currentSemester,
             'pembayarans' => $pembayarans,
+            'years' => $years,
         ], $data);
     }
 

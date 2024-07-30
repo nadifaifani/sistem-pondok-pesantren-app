@@ -18,25 +18,30 @@ class AdminDaftarUlangController extends Controller
         $currentSemester = SemesterHelper::getCurrentSemester();
 
         if ($request->ajax()) {
-            // Data untuk tabel yang lunas
-            $dataLunas = Pembayaran::orderBy('created_at', 'desc')
+            $tahun = $request->input('tahun');
+
+            $queryLunas = Pembayaran::orderBy('created_at', 'desc')
                 ->where('semester_ajaran', $currentSemester['semester'])
                 ->where('tahun_ajaran', $currentSemester['tahun'])
                 ->where('jenis_pembayaran', 'daftar_ulang')
                 ->where('status_pembayaran', 'lunas')
-                ->with(['santri', 'user'])
-                ->get();
+                ->with(['santri', 'user']);
 
-            // Data untuk tabel yang belum lunas
-            $dataBelumLunas = Pembayaran::orderBy('created_at', 'desc')
+            $queryBelumLunas = Pembayaran::orderBy('created_at', 'desc')
                 ->where('semester_ajaran', $currentSemester['semester'])
                 ->where('tahun_ajaran', $currentSemester['tahun'])
                 ->where('jenis_pembayaran', 'daftar_ulang')
                 ->where('status_pembayaran', 'belum_lunas')
-                ->with(['santri', 'user'])
-                ->get();
+                ->with(['santri', 'user']);
 
-            // Kemas kedua set data dalam array atau objek
+            if (!empty($tahun)) {
+                $queryLunas->whereYear('tanggal_pembayaran', $tahun);
+                $queryBelumLunas->where('tahun_ajaran', $tahun);
+            }
+
+            $dataLunas = $queryLunas->get();
+            $dataBelumLunas = $queryBelumLunas->get();
+
             $responseData = [
                 'data' => [
                     'lunas' => $dataLunas,
@@ -44,7 +49,6 @@ class AdminDaftarUlangController extends Controller
                 ]
             ];
 
-            // Kembalikan respons JSON
             return response()->json($responseData);
         }
 
@@ -56,9 +60,15 @@ class AdminDaftarUlangController extends Controller
             ->with(['santri', 'user'])
             ->get();
 
+        $years = Pembayaran::selectRaw('YEAR(tanggal_pembayaran) as year')
+            ->whereNotNull('tanggal_pembayaran')
+            ->distinct()
+            ->pluck('year');
+
         return view('admin.pembayaran.daftar_ulang', [
             'currentSemester' => $currentSemester,
             'pembayarans' => $pembayarans,
+            'years' => $years,
         ], $data);
     }
 

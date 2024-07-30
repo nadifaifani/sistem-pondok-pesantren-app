@@ -323,10 +323,15 @@
     {{-- Datatable --}}
     <script>
         $(document).ready(function() {
-            $('#tablePemasukan').DataTable({
+            var tabel_pemasukan = $('#tablePemasukan').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('pemasukan') }}",
+                ajax: {
+                    url: "{{ route('pemasukan') }}",
+                    data: function(d) {
+                        d.tahun = $('#filterTahun').val(); // Kirim parameter tahun
+                    },
+                },
                 columns: [
                     // Kolom nomor urut
                     {
@@ -416,7 +421,22 @@
                 lengthMenu: [
                     [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
                     ['10', '25', '50', '100', 'Semua']
-                ]
+                ],
+                initComplete: function() {
+                    // Membuat dropdown filter tahun di samping kotak pencarian
+                    $('<span class="ml-4"><label>Tahun: <select id="filterTahun" class="form-control"><option value="">Semua Tahun</option></select></label></span>')
+                        .appendTo('#tablePemasukan_filter');
+
+                    // Populate tahun options
+                    @foreach($years as $year)
+                        $('#filterTahun').append(new Option('{{ $year }}', '{{ $year }}'));
+                    @endforeach
+
+                    // Menambahkan event listener untuk filter tahun
+                    $('#filterTahun').on('change', function() {
+                        tabel_pemasukan.ajax.reload();
+                    });
+                }
             });
 
         });

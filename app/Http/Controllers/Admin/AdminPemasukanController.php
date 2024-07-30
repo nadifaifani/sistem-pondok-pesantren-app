@@ -17,15 +17,25 @@ class AdminPemasukanController extends Controller
         $data['title'] = 'Pemasukan';
 
         if ($request->ajax()) {
-            $data = Pemasukan::with(['user'])->orderBy('tanggal_pemasukan', 'desc')->get();
+            $tahun = $request->input('tahun');
+
+            $data = Pemasukan::with(['user'])
+                ->whereDate('tanggal_pemasukan', 'like', $tahun . '%')
+                ->orderBy('tanggal_pemasukan', 'desc')->get();
+
             return DataTables::of($data)
                 ->make(true);
         }
 
         $pemasukans = Pemasukan::with(['user'])->orderBy('tanggal_pemasukan', 'desc')->get();
 
+        $years = Pemasukan::selectRaw('YEAR(tanggal_pemasukan) as year')
+            ->distinct()
+            ->pluck('year');
+
         return view('admin.pemasukan.pemasukan', [
             'pemasukans' => $pemasukans,
+            'years' => $years,
         ], $data);
     }
 
